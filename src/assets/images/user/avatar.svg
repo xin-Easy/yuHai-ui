@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFDFC4"/>
+      <stop offset="100%" stop-color="#F0C8A0"/>
+    </linearGradient>
+    <linearGradient id="shirt" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4F46E5"/>
+      <stop offset="100%" stop-color="#4338CA"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <circle cx="100" cy="100" r="100" fill="#EEF2FF"/>
+  
+  <!-- Body -->
+  <path d="M40,180 Q100,220 160,180 L160,200 L40,200 Z" fill="url(#shirt)"/>
+  <path d="M40,180 Q100,140 160,180" fill="url(#shirt)"/>
+  
+  <!-- Head -->
+  <circle cx="100" cy="100" r="60" fill="url(#skin)"/>
+  
+  <!-- Hair -->
+  <path d="M40,100 Q40,40 100,40 Q160,40 160,100 Q160,90 150,70 Q100,20 50,70 Q40,90 40,100" fill="#2D3748"/>
+  
+  <!-- Eyes -->
+  <circle cx="80" cy="100" r="6" fill="#1A202C"/>
+  <circle cx="120" cy="100" r="6" fill="#1A202C"/>
+  
+  <!-- Smile -->
+  <path d="M80,120 Q100,135 120,120" stroke="#C05621" stroke-width="4" fill="none" stroke-linecap="round"/>
+  
+  <!-- Glasses (Boss style) -->
+  <circle cx="80" cy="100" r="15" stroke="#1A202C" stroke-width="2" fill="none"/>
+  <circle cx="120" cy="100" r="15" stroke="#1A202C" stroke-width="2" fill="none"/>
+  <line x1="95" y1="100" x2="105" y2="100" stroke="#1A202C" stroke-width="2"/>
+</svg>

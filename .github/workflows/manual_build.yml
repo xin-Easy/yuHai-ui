@@ -1,0 +1,77 @@
+name: Manual Build
+on:
+  workflow_dispatch:
+
+jobs:
+  build-tauri:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-22.04, windows-latest]
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies (Ubuntu)
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev build-essential curl wget file libssl-dev libgtk-3-dev libayatana-appindicator3-dev
+
+      - name: Rust setup
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
+
+      - name: Sync node version and setup cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          cache: 'pnpm'
+
+      - name: Install frontend dependencies
+        run: pnpm install
+
+      - name: Set Default Version
+        shell: bash
+        run: |
+          echo "TAURI_APP_VERSION=0.0.0" >> $GITHUB_ENV
+          echo "VITE_VERSION=0.0.0" >> $GITHUB_ENV
+
+      - name: Download Core (Windows)
+        if: matrix.platform == 'windows-latest'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release download --repo xin-Easy/yuHai --pattern "yuHai-windows-latest-*-portable.zip" --dir src-tauri/resources --clobber
+          cd src-tauri/resources
+          Move-Item -Path $(Get-ChildItem yuHai-windows-latest-*-portable.zip).Name -Destination yuHai-core.zip -Force
+
+      - name: Download Core (Linux)
+        if: matrix.platform == 'ubuntu-22.04'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release download --repo xin-Easy/yuHai --pattern "yuHai-ubuntu-latest-*-portable.zip" --dir src-tauri/resources --clobber
+          cd src-tauri/resources
+          mv yuHai-ubuntu-latest-*-portable.zip yuHai-core.zip
+
+      - name: Build the app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # No release settings, just build
+          args: ''
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-${{ matrix.platform }}
+          path: "${{ github.workspace }}/src-tauri/target/release/bundle/**"
+          retention-days: 7

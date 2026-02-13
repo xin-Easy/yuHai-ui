@@ -1,0 +1,56 @@
+.art-table {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .el-table {
+    flex: 1;
+    width: 100%;
+    margin-top: 0;
+  }
+
+  :deep(.el-loading-mask) {
+    z-index: 100;
+    background-color: var(--default-box-color) !important;
+  }
+
+  // Loading 过渡动画 - 消失时淡出
+  .loading-fade-leave-active {
+    transition: opacity 0.3s ease-out;
+  }
+
+  .loading-fade-leave-to {
+    opacity: 0;
+  }
+
+  // 空状态垂直居中
+  &.is-empty {
+    :deep(.el-scrollbar__wrap) {
+      display: flex;
+    }
+  }
+
+  .pagination {
+    display: flex;
+    flex-shrink: 0;
+    margin-top: 13px;
+
+    :deep(.el-select) {
+      width: 102px !important;
+    }
+
+    // 分页对齐方式
+    &.left {
+      justify-content: flex-start;
+    }
+
+    &.center {
+      justify-content: center;
+    }
+
+    &.right {
+      justify-content: flex-end;
+    }
+  }
+}

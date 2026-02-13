@@ -1,0 +1,691 @@
+{
+  "httpMsg": {
+    "unauthorized": "Unauthorized access, please login again",
+    "forbidden": "Access to this resource is forbidden",
+    "notFound": "The requested resource does not exist",
+    "methodNotAllowed": "Request method not allowed",
+    "requestTimeout": "Request timeout, please try again later",
+    "internalServerError": "Internal server error, please try again later",
+    "badGateway": "Bad gateway error, please try again later",
+    "serviceUnavailable": "Service temporarily unavailable, please try again later",
+    "gatewayTimeout": "Gateway timeout, please try again later",
+    "requestCancelled": "Request cancelled",
+    "networkError": "Network connection error, please check your connection",
+    "requestFailed": "Request failed",
+    "requestConfigError": "Request configuration error"
+  },
+  "topBar": {
+    "search": {
+      "title": "Search"
+    },
+    "user": {
+      "userCenter": "User center",
+      "docs": "Document",
+      "github": "Github",
+      "lockScreen": "Lock screen",
+      "logout": "Log out"
+    },
+    "guide": {
+      "title": "Click here to view",
+      "theme": "Theme style",
+      "menu": "Open top menu",
+      "description": "More configurations"
+    }
+  },
+  "common": {
+    "tips": "Prompt",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "logOutTips": "Do you want to log out?",
+    "welcomeBack": "Welcome Back",
+    "viewMore": "View More"
+  },
+  "search": {
+    "placeholder": "Search page",
+    "historyTitle": "Search history",
+    "switchKeydown": "Navigate",
+    "selectKeydown": "Select",
+    "exitKeydown": "Close"
+  },
+  "setting": {
+    "menuType": {
+      "title": "Menu Layout",
+      "list": ["Vertical", "Horizontal", "Mixed", "Dual"]
+    },
+    "theme": {
+      "title": "Theme Style",
+      "list": ["Light", "Dark", "System"]
+    },
+    "menu": {
+      "title": "Menu Style"
+    },
+    "color": {
+      "title": "Theme Color"
+    },
+    "box": {
+      "title": "Box Style",
+      "list": ["Border", "Shadow"]
+    },
+    "container": {
+      "title": "Container Width",
+      "list": ["Full", "Boxed"]
+    },
+    "basics": {
+      "title": "Basic Config",
+      "list": {
+        "multiTab": "Show work tab",
+        "accordion": "Sidebar opens accordion",
+        "collapseSidebar": "Show sidebar button",
+        "reloadPage": "Show reload page button",
+        "fastEnter": "Show fast enter",
+        "breadcrumb": "Show crumb navigation",
+        "language": "Show multilingual selection",
+        "progressBar": "Show top progress bar",
+        "weakMode": "Color Weakness Mode",
+        "watermark": "Global watermark",
+        "menuWidth": "Menu width",
+        "tabStyle": "Tab style",
+        "pageTransition": "Page animation",
+        "borderRadius": "Custom radius"
+      }
+    },
+    "tabStyle": {
+      "default": "Default",
+      "card": "Card",
+      "google": "Chrome"
+    },
+    "transition": {
+      "list": {
+        "none": "None",
+        "fade": "Fade",
+        "slideLeft": "Slide Left",
+        "slideBottom": "Slide Bottom",
+        "slideTop": "Slide Top"
+      }
+    },
+    "actions": {
+      "resetConfig": "Reset Config",
+      "copyConfig": "Copy Config",
+      "copySuccess": "Configuration copied to clipboard, paste it into src/config/setting.ts file",
+      "copyFailed": "Copy failed, please try again",
+      "resetFailed": "Reset failed, please refresh the page and try again"
+    }
+  },
+  "notice": {
+    "title": "Notice",
+    "btnRead": "Mark as read",
+    "bar": ["Notice", "Message", "Todo"],
+    "text": ["No"],
+    "viewAll": "View all"
+  },
+  "worktab": {
+    "btn": {
+      "refresh": "Refresh",
+      "fixed": "Fixed",
+      "unfixed": "Unfixed",
+      "closeLeft": "Close left",
+      "closeRight": "Close right",
+      "closeOther": "Close other",
+      "closeAll": "Close all"
+    }
+  },
+  "greeting": {
+    "dawn": "Good morning!",
+    "morning": "Good morning!",
+    "afternoon": "Good afternoon!",
+    "evening": "Good evening!"
+  },
+  "exceptionPage": {
+    "gohome": "Go Home",
+    "403": "Sorry, you do not have permission to access this page",
+    "404": "Sorry, the page you are trying to access does not exist",
+    "500": "Sorry, there was an error on the server"
+  },
+  "menus": {
+    "login": {
+      "title": "Login"
+    },
+    "register": {
+      "title": "Register"
+    },
+    "forgetPassword": {
+      "title": "Forget Password"
+    },
+    "outside": {
+      "title": "Outside"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "console": "Console",
+      "analysis": "Analysis",
+      "ecommerce": "Ecommerce"
+    },
+    "home": {
+      "title": "Home"
+    },
+    "visual": {
+      "title": "Visual Dashboard"
+    },
+    "core": {
+      "account": "Account Management",
+      "commentManage": "Comment Management",
+      "noteDetail": "Note Detail",
+      "agentStart": "Agent Start",
+      "crawlerTask": "Crawler Task",
+      "taskList": "Task List",
+      "noteManage": "Note Management"
+    },
+    "update": {
+      "title": "Update Management",
+      "center": "Update Center",
+      "coreLog": "Core Logs"
+    }
+  },
+  "update": {
+    "app": "Application",
+    "core": "Core",
+    "env": {
+      "browser": "Running in browser environment",
+      "browserAutoUpdate": "Browser version updates automatically, no manual check needed",
+      "desktopRequired": "For full desktop features, please download the desktop version",
+      "webVersion": "Web Version",
+      "webAutoUpdate": "Browser version automatically gets latest features",
+      "currentBrowser": "Current Environment: Browser",
+      "coreDesktopRequired": "Core module available only in desktop app",
+      "coreWebEnvironment": "Web Environment",
+      "coreDesktopRequiredDesc": "Core updates require desktop environment"
+    },
+    "check": {
+      "start": "Checking for app updates...",
+      "complete": "App update check complete",
+      "action": "Check App Update",
+      "latest": "Already on the latest version",
+      "notFound": "No updates found",
+      "found": "New version found",
+      "coreStart": "Checking for core updates...",
+      "coreComplete": "Core update check complete",
+      "coreAction": "Check Core Update",
+      "localExists": "Update file exists locally, ready to install",
+      "size": "Update Size: ",
+      "date": "Release Date: "
+    },
+    "download": {
+      "start": "Downloading update, total size: ",
+      "complete": "Download complete",
+      "cancelUnsupported": "Canceling download not supported",
+      "coreApiUnavailable": "Core update API unavailable: Browser environment",
+      "coreStart": "Downloading core update...",
+      "coreComplete": "Core update download complete",
+      "coreAction": "Download Core Update",
+      "canceling": "Canceling download...",
+      "canceled": "Download canceled",
+      "cancelFailed": "Failed to cancel download",
+      "apiError": "Core update API unavailable"
+    },
+    "install": {
+      "start": "Downloading and installing update...",
+      "complete": "Update installed, restarting soon",
+      "action": "Install App Update",
+      "coreStart": "Installing core update...",
+      "coreApiUnavailable": "Core update API unavailable: Browser environment",
+      "coreComplete": "Core update installed",
+      "coreFailed": "Failed to install core update"
+    },
+    "init": {
+      "complete": "App update component initialized",
+      "coreComplete": "Core update component initialized",
+      "apiTimeout": "Core update API timeout, please try again",
+      "apiError": "Core update API unavailable"
+    },
+    "version": {
+      "current": "Current App Version: ",
+      "failed": "Failed to get app version",
+      "coreCurrent": "Current Core Version: ",
+      "coreFailed": "Failed to get core version"
+    },
+    "log": {
+      "title": "Operation Logs",
+      "clear": "Clear Logs",
+      "empty": "No logs",
+      "success": "Success",
+      "warning": "Warning",
+      "error": "Error",
+      "info": "Info",
+      "loaded": "Update management page loaded",
+      "coreError": "Core update error: ",
+      "unknownError": "Unknown error"
+    },
+    "coreLog": {
+      "searchPlaceholder": "Search",
+      "level": "Level",
+      "all": "All",
+      "encoding": "Encoding",
+      "auto": "Auto",
+      "autoScroll": "Auto Scroll",
+      "syncConsole": "Sync Console",
+      "clear": "Clear",
+      "export": "Export",
+      "pause": "Pause",
+      "resume": "Resume",
+      "paused": "Paused",
+      "running": "Running",
+      "totalLines": "Total Lines",
+      "exit": "Exit"
+    },
+    "tabs": {
+      "core": "Core Update",
+      "app": "App Update"
+    },
+    "panel": {
+      "control": "{label} Operation Control",
+      "check": "Check {label} Update",
+      "checking": "Checking...",
+      "download": "Download {label} Update",
+      "downloading": "Downloading...",
+      "install": "Install {label} Update",
+      "cancelDownload": "Cancel Download",
+      "status": "{label} Status",
+      "currentVersion": "Current Version:",
+      "updateStatus": "Update Status:",
+      "latestInfo": "Latest Version Info",
+      "latestVersion": "Latest Version:",
+      "releaseDate": "Release Date:",
+      "fileSize": "File Size:",
+      "downloadProgress": "Download Progress",
+      "noDownloadTask": "No download tasks",
+      "description": "Update Description"
+    }
+  },
+  "table": {
+    "form": {
+      "reset": "Reset",
+      "submit": "Submit"
+    },
+    "searchBar": {
+      "reset": "Reset",
+      "search": "Search",
+      "expand": "Expand",
+      "collapse": "Collapse",
+      "searchInputPlaceholder": "Please enter",
+      "searchSelectPlaceholder": "Please select"
+    },
+    "selection": "Select",
+    "sizeOptions": {
+      "small": "Compact",
+      "default": "Default",
+      "large": "Loose"
+    },
+    "column": {
+      "selection": "Select",
+      "expand": "Expand",
+      "index": "Index"
+    },
+    "zebra": "Zebra",
+    "border": "Border",
+    "headerBackground": "Header BG"
+  },
+  "core": {
+    "noteManage": {
+      "title": "Note Management",
+      "keyword": "Keyword",
+      "type": "Type",
+      "userId": "User ID",
+      "dateRange": "Date Range",
+      "collect": "Collect Notes",
+      "export": "Export Excel",
+      "batchDelete": "Batch Delete",
+      "deleteConfirm": "Are you sure to delete this note?",
+      "deleteSuccess": "Delete successfully",
+      "collectDialog": {
+        "title": "Collect Notes",
+        "keywords": "Keywords",
+        "filterKeywords": "Filter Keywords",
+        "count": "Count",
+        "conditions": "Conditions",
+        "liked": "Likes >",
+        "collected": "Collects >",
+        "comment": "Comments >",
+        "shared": "Shares >"
+      }
+    },
+    "systemConfig": {
+      "sections": {
+        "tenant": "Tenant Configuration",
+        "browser": "Browser Settings",
+        "ai": "AI Configuration",
+        "db": "Database Connection",
+        "dbPool": "Database Pool"
+      },
+      "items": {
+        "TENANT_ID": "Tenant ID",
+        "BROWSER_ATTACH": "Browser Attach",
+        "BROWSER_HEADLESS": "Browser Headless",
+        "BROWSER_PORT": "Browser Port",
+        "AI_PROVIDER": "AI Provider",
+        "AI_API_KEY": "API Key",
+        "AI_BASE_URL": "Base URL",
+        "AI_MODEL_NAME": "Model Name",
+        "DB_TYPE": "Database Type",
+        "DB_HOST": "Host",
+        "DB_PORT": "Port",
+        "DB_USER": "Username",
+        "DB_PASSWORD": "Password",
+        "DB_NAME": "Database Name",
+        "DB_ECHO": "SQL Echo (Debug)",
+        "SQLITE_FILE": "SQLite File",
+        "DB_POOL_MIN_SIZE": "Pool Min Size",
+        "DB_POOL_MAX_SIZE": "Pool Max Size",
+        "DB_CONNECT_TIMEOUT": "Connect Timeout (s)",
+        "DB_CHARSET": "Charset"
+      },
+      "options": {
+        "deepseek": "Deepseek",
+        "openai": "OpenAI",
+        "aliyun": "Aliyun (Qwen)"
+      },
+      "actions": {
+        "reset": "Reset to default"
+      }
+    },
+    "account": {
+      "settings": "Account Settings",
+      "cookiePlaceholder": "Please enter account cookie",
+      "addCookie": "Add Cookie",
+      "systemEnv": "System Environment",
+      "leftWindowStatus": "Left Window Status",
+      "attached": "Attached",
+      "detached": "Detached",
+      "visible": "Visible",
+      "hidden": "Hidden",
+      "focused": "Focused",
+      "unfocused": "Unfocused",
+      "autoRefresh": "Auto Refresh",
+      "manualRefresh": "Manual Refresh",
+      "refresh": "Refresh",
+      "windowId": "Window ID",
+      "loading": "Loading",
+      "loadingState": {
+        "loading": "Loading",
+        "idle": "Idle"
+      },
+      "devTools": "DevTools",
+      "on": "On",
+      "off": "Off",
+      "screenId": "Screen ID",
+      "scale": "Scale",
+      "resolution": "Resolution",
+      "accountList": "Account List",
+      "cookieAdded": "Cookie added",
+      "edit": "Edit",
+      "editAccount": "Edit Account",
+      "confirm": "Confirm",
+      "toggleLogin": "Toggle Login State",
+      "deleteConfirm": "Delete Confirmation",
+      "deletePrompt": "Are you sure you want to delete account \"{name}\"?",
+      "cancel": "Cancel",
+      "deleteSuccess": "Delete successful",
+      "delete": "Delete",
+      "proxy": {
+        "title": "Proxy Management",
+        "open": "Manage Proxy",
+        "searchPlaceholder": "Search by name or host",
+        "search": "Search",
+        "add": "Add Proxy",
+        "edit": "Edit",
+        "delete": "Delete",
+        "createTitle": "Add Proxy",
+        "editTitle": "Edit Proxy",
+        "createSuccess": "Proxy created",
+        "updateSuccess": "Proxy updated",
+        "deleteSuccess": "Proxy deleted",
+        "statusEnabled": "Enabled",
+        "statusDisabled": "Disabled",
+        "columns": {
+          "name": "Name",
+          "protocol": "Protocol",
+          "host": "Host",
+          "port": "Port",
+          "username": "Username",
+          "status": "Status",
+          "description": "Description",
+          "updatedAt": "Updated At"
+        },
+        "form": {
+          "name": "Name",
+          "protocol": "Protocol",
+          "host": "Host",
+          "port": "Port",
+          "username": "Username",
+          "password": "Password",
+          "status": "Status",
+          "description": "Description"
+        },
+        "rules": {
+          "name": "Please enter name",
+          "protocol": "Please select protocol",
+          "host": "Please enter host",
+          "port": "Please enter port"
+        },
+        "deletePrompt": "Are you sure you want to delete proxy \"{name}\"?"
+      },
+      "columns": {
+        "name": "Name",
+        "redBookId": "RedBook ID",
+        "followCount": "Follows",
+        "fansCount": "Fans",
+        "likesAndCollections": "Likes & Collections",
+        "loginTime": "Login Time",
+        "lastLoginTime": "Last Login Time"
+      }
+    },
+    "commentManage": {
+      "keyword": "Keyword",
+      "keywordPlaceholder": "Content/Nickname Keyword",
+      "noteId": "Note ID",
+      "noteIdPlaceholder": "Filter by Note ID",
+      "userId": "User ID",
+      "userIdPlaceholder": "Filter by User ID",
+      "dateRange": "Date Range",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "sortBy": "Sort By",
+      "time": "Time",
+      "likeCount": "Like Count",
+      "sortOrder": "Sort Order",
+      "desc": "Desc",
+      "asc": "Asc",
+      "index": "Index",
+      "nickname": "Nickname",
+      "exportExcel": "Export Excel",
+      "content": "Content",
+      "liked": "Liked",
+      "ipLocation": "IP Location",
+      "subCommentCount": "Sub-comments",
+      "exportStart": "Start Exporting Excel",
+      "exportFailed": "Export Failed"
+    },
+    "crawlerTask": {
+      "createTask": "Create Crawler Task",
+      "commentCollection": "Comment Collection",
+      "noteId": "Note ID",
+      "noteIdPlaceholder": "Please enter Note ID",
+      "noteUrl": "Note URL",
+      "noteUrlPlaceholder": "Please enter full note URL (optional)",
+      "maxCount": "Max Count",
+      "maxDuration": "Max Duration (s)",
+      "unlimited": "0 for unlimited",
+      "maxConsecutiveFailures": "Max Consecutive Failures",
+      "submit": "Create Task",
+      "reset": "Reset"
+    },
+    "agentStart": {
+      "title": "Agent Start",
+      "description": "Quickly start a new automated agent task, supporting multi-platform collection and interaction.",
+      "generalBrowser": "General Browser",
+      "deepBrowser": "Deep Browser",
+      "accountNurturer": "Account Nurturer",
+      "searchExplorer": "Search Explorer",
+      "inboxManager": "Inbox Manager",
+      "paramsConfig": "Parameter Config",
+      "noParams": "No parameters required for this template",
+      "stopConditions": "Stop Conditions (0 for unlimited)",
+      "maxCount": "Max Count",
+      "maxDuration": "Max Duration (s)",
+      "maxConsecutiveFailures": "Max Consecutive Failures",
+      "maxNotesCount": "Max Notes Count",
+      "maxCommentsCount": "Max Comments Count",
+      "restart": "Restart",
+      "startTask": "Start Task",
+      "stopTask": "Stop Current Task"
+    },
+    "noteDetail": {
+      "title": "Note Detail",
+      "exportExcel": "Export Excel",
+      "keyword": "Keyword",
+      "keywordPlaceholder": "Title/Nickname Keyword",
+      "type": "Type",
+      "userId": "User ID",
+      "userIdPlaceholder": "Filter by User ID",
+      "dateRange": "Date Range",
+      "sortBy": "Sort By",
+      "createdAt": "Created At",
+      "publishTime": "Publish Time",
+      "likedCount": "Likes",
+      "collectedCount": "Collections",
+      "commentCount": "Comments",
+      "shareCount": "Shares",
+      "coverSize": "Cover Size",
+      "description": "Description",
+      "descPlaceholder": "Please enter description",
+      "saveDesc": "Save Description (Local)",
+      "tags": "Tags",
+      "tagPlaceholder": "Enter tag and press Enter",
+      "saveTags": "Save Tags (Local)",
+      "descUpdated": "Description updated (Local)",
+      "tagsUpdated": "Tags updated (Local)",
+      "resources": "Resources",
+      "batchDedup": "Batch Dedup",
+      "addResource": "Add Resource",
+      "image": "Image",
+      "format": "Format",
+      "dimensions": "Dimensions",
+      "duration": "Duration",
+      "dedup": "Dedup",
+      "deduplicated": "Deduplicated",
+      "notDeduplicated": "Not Deduplicated",
+      "action": "Action",
+      "uploadText": "Drag file here or click to select",
+      "uploadTip": "Support image and video, max 50 files",
+      "selectFile": "Select File",
+      "add": "Add",
+      "cancel": "Cancel"
+    },
+    "taskList": {
+      "title": "Task List",
+      "refresh": "Refresh",
+      "taskId": "Task ID",
+      "taskType": "Task Type",
+      "status": "Status",
+      "progress": "Progress",
+      "message": "Message/Error",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "action": "Action",
+      "view": "View",
+      "stop": "Stop",
+      "delete": "Delete",
+      "deleteConfirm": "Are you sure to delete this task?",
+      "resultTitle": "Result Details",
+      "taskInfo": "Task Details",
+      "collectedNotes": "Collected Notes",
+      "collectedComments": "Collected Comments",
+      "noImage": "No Image",
+      "drawer": {
+        "collectedNotesList": "Collected Notes List",
+        "collectedCommentsList": "Collected Comments List",
+        "noteDetailsList": "Note Details List",
+        "agentTaskDetails": "Agent Task Details",
+        "title": "Title",
+        "noteId": "Note ID",
+        "type": "Type",
+        "publisher": "Publisher",
+        "likes": "Likes",
+        "collects": "Collects",
+        "comments": "Comments",
+        "shares": "Shares",
+        "cover": "Cover",
+        "link": "Link",
+        "commentContent": "Comment Content",
+        "commenter": "Commenter",
+        "commentTime": "Comment Time",
+        "replies": "Replies",
+        "description": "Description",
+        "tags": "Tags",
+        "property": "Property",
+        "value": "Value",
+        "notesCollected": "Notes Collected",
+        "commentsCollected": "Comments Collected",
+        "consecutiveFailures": "Consecutive Failures",
+        "params": "Params"
+      }
+    }
+  },
+  "dashboard": {
+    "overview": {
+      "title": "System Overview",
+      "compareYesterday": "vs Yesterday",
+      "up": "Up",
+      "down": "Down",
+      "flat": "Flat",
+      "fetchError": "Failed to fetch overview data",
+      "totalComments": "Total Comments",
+      "commentsUnit": "items"
+    },
+    "taskStatus": {
+      "title": "Task Status Distribution",
+      "seriesName": "Task Status",
+      "fetchError": "Failed to fetch task status distribution"
+    },
+    "trend": {
+      "title": "Comment Activity Trend",
+      "days7": "7 Days",
+      "days30": "30 Days",
+      "publishCount": "Publish Count",
+      "seriesName": "New Comments Daily",
+      "yAxisName": "Comments",
+      "fetchError": "Failed to fetch trend data"
+    },
+    "wordCloud": {
+      "title": "Popular Word Cloud",
+      "fetchError": "Failed to fetch word cloud data"
+    },
+    "geo": {
+      "title": "Commenter Location Distribution",
+      "fetchError": "Failed to fetch geographic distribution"
+    },
+    "heatmap": {
+      "title": "User Comment Activity Hours",
+      "activity": "Comment Interactions",
+      "fetchError": "Failed to fetch heatmap data"
+    },
+    "noteType": {
+      "title": "Note Type Distribution",
+      "seriesName": "Note Type",
+      "imageText": "Image Text",
+      "video": "Video",
+      "fetchError": "Failed to fetch note type distribution"
+    },
+    "rank": {
+      "title": "Popular Note Ranking",
+      "column": {
+        "rank": "Rank",
+        "cover": "Cover",
+        "title": "Title",
+        "author": "Author",
+        "likes": "Likes",
+        "publishTime": "Publish Time"
+      },
+      "fetchError": "Failed to fetch ranking data"
+    }
+  }
+}

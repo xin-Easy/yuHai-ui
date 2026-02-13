@@ -1,0 +1,751 @@
+{
+  "httpMsg": {
+    "unauthorized": "未授权访问，请重新登录",
+    "forbidden": "禁止访问该资源",
+    "notFound": "请求的资源不存在",
+    "methodNotAllowed": "请求方法不允许",
+    "requestTimeout": "请求超时，请稍后重试",
+    "internalServerError": "服务器内部错误，请稍后重试",
+    "badGateway": "网关错误，请稍后重试",
+    "serviceUnavailable": "服务暂时不可用，请稍后重试",
+    "gatewayTimeout": "网关超时，请稍后重试",
+    "requestCancelled": "请求已取消",
+    "networkError": "网络连接异常，请检查网络连接",
+    "requestFailed": "请求失败",
+    "requestConfigError": "请求配置错误"
+  },
+  "topBar": {
+    "search": {
+      "title": "搜索"
+    },
+    "user": {
+      "userCenter": "个人中心",
+      "docs": "使用文档",
+      "github": "Github",
+      "lockScreen": "锁定屏幕",
+      "logout": "退出登录"
+    },
+    "guide": {
+      "title": "点击这里查看",
+      "theme": "主题风格",
+      "menu": "开启顶栏菜单",
+      "description": "等更多配置"
+    }
+  },
+  "common": {
+    "tips": "提示",
+    "cancel": "取消",
+    "confirm": "确定",
+    "logOutTips": "您是否要退出登录?",
+    "welcomeBack": "欢迎回来",
+    "viewMore": "查看更多"
+  },
+  "search": {
+    "placeholder": "搜索页面",
+    "historyTitle": "搜索历史",
+    "switchKeydown": "切换",
+    "selectKeydown": "选择",
+    "exitKeydown": "关闭"
+  },
+  "setting": {
+    "menuType": {
+      "title": "菜单布局",
+      "list": ["垂直", "水平", "混合", "双列"]
+    },
+    "tenantScope": {
+      "title": "数据范围",
+      "list": ["当前租户", "所有租户", "系统租户"]
+    },
+    "theme": {
+      "title": "主题风格",
+      "list": ["浅色", "深色", "系统"]
+    },
+    "menu": {
+      "title": "菜单风格"
+    },
+    "color": {
+      "title": "系统主题色"
+    },
+    "box": {
+      "title": "盒子样式",
+      "list": ["边框", "阴影"]
+    },
+    "container": {
+      "title": "容器宽度",
+      "list": ["铺满", "定宽"]
+    },
+    "basics": {
+      "title": "基础配置",
+      "list": {
+        "multiTab": "开启多标签栏",
+        "accordion": "侧边栏开启手风琴模式",
+        "collapseSidebar": "显示折叠侧边栏按钮",
+        "fastEnter": "显示快速入口",
+        "reloadPage": "显示重载页面按钮",
+        "breadcrumb": "显示全局面包屑导航",
+        "language": "显示多语言选择",
+        "progressBar": "显示顶部进度条",
+        "weakMode": "色弱模式",
+        "watermark": "全局水印",
+        "menuWidth": "菜单宽度",
+        "tabStyle": "标签页风格",
+        "pageTransition": "页面切换动画",
+        "borderRadius": "自定义圆角"
+      }
+    },
+    "tabStyle": {
+      "default": "默认",
+      "card": "卡片",
+      "google": "谷歌"
+    },
+    "transition": {
+      "list": {
+        "none": "无动画",
+        "fade": "淡入淡出",
+        "slideLeft": "左侧滑入",
+        "slideBottom": "下方滑入",
+        "slideTop": "上方滑入"
+      }
+    },
+    "actions": {
+      "switchSuccess": "切换成功",
+      "resetConfig": "重置配置",
+      "copyConfig": "复制配置",
+      "copySuccess": "配置已复制到剪贴板，可粘贴到 src/config/setting.ts 文件中",
+      "copyFailed": "复制失败，请重试",
+      "resetFailed": "重置失败，请刷新页面后重试"
+    }
+  },
+  "notice": {
+    "title": "通知",
+    "btnRead": "标为已读",
+    "bar": ["通知", "消息", "代办"],
+    "text": ["暂无"],
+    "viewAll": "查看全部"
+  },
+  "worktab": {
+    "btn": {
+      "refresh": "刷新",
+      "fixed": "固定",
+      "unfixed": "取消固定",
+      "closeLeft": "关闭左侧",
+      "closeRight": "关闭右侧",
+      "closeOther": "关闭其他",
+      "closeAll": "关闭全部"
+    }
+  },
+  "login": {
+    "leftView": {
+      "title": "一款兼具设计美学与高效开发的后台系统",
+      "subTitle": "美观实用的界面，经过视觉优化，确保卓越的用户体验"
+    },
+    "title": "欢迎回来",
+    "subTitle": "输入您的账号和密码登录",
+    "roles": {
+      "super": "超级管理员",
+      "admin": "管理员",
+      "user": "普通用户"
+    },
+    "placeholder": {
+      "username": "请输入账号",
+      "password": "请输入密码",
+      "slider": "请拖动滑块完成验证"
+    },
+    "sliderText": "按住滑块拖动",
+    "sliderSuccessText": "验证成功"
+  },
+  "greeting": {
+    "dawn": "凌晨了！",
+    "morning": "上午好！",
+    "afternoon": "下午好！",
+    "evening": "晚上好！"
+  },
+  "exceptionPage": {
+    "gohome": "返回首页",
+    "403": "抱歉，您无权访问该页面",
+    "404": "抱歉，您访问的页面不存在",
+    "500": "抱歉，服务器出错了"
+  },
+  "menus": {
+    "login": {
+      "title": "登录"
+    },
+    "register": {
+      "title": "注册"
+    },
+    "forgetPassword": {
+      "title": "忘记密码"
+    },
+    "outside": {
+      "title": "内嵌页面"
+    },
+    "dashboard": {
+      "title": "仪表盘",
+      "console": "工作台",
+      "analysis": "分析页",
+      "ecommerce": "电子商务"
+    },
+    "home": {
+      "title": "首页"
+    },
+    "visual": {
+      "title": "可视化大屏"
+    },
+    "core": {
+      "account": "账户管理",
+      "commentManage": "评论管理",
+      "noteDetail": "笔记详情",
+      "agentStart": "Agent 启动",
+      "crawlerTask": "爬虫任务",
+      "taskList": "任务列表",
+      "systemConfig": "系统配置",
+      "noteManage": "笔记管理"
+    },
+    "update": {
+      "title": "更新管理",
+      "center": "更新中心",
+      "coreLog": "核心日志"
+    }
+  },
+  "table": {
+    "form": {
+      "reset": "重置",
+      "submit": "提交"
+    },
+    "searchBar": {
+      "reset": "重置",
+      "search": "查询",
+      "expand": "展开",
+      "collapse": "收起",
+      "searchInputPlaceholder": "请输入",
+      "searchSelectPlaceholder": "请选择"
+    },
+    "selection": "选择",
+    "sizeOptions": {
+      "small": "紧凑",
+      "default": "默认",
+      "large": "宽松"
+    },
+    "column": {
+      "selection": "勾选",
+      "expand": "展开",
+      "index": "序号"
+    },
+    "zebra": "斑马纹",
+    "border": "边框",
+    "headerBackground": "表头背景"
+  },
+  "core": {
+    "noteManage": {
+      "title": "笔记管理",
+      "keyword": "关键词",
+      "type": "类型",
+      "userId": "用户ID",
+      "dateRange": "日期范围",
+      "collect": "采集笔记",
+      "export": "导出Excel",
+      "batchDelete": "批量删除",
+      "deleteConfirm": "确定删除该笔记吗？",
+      "deleteSuccess": "删除成功",
+      "collectDialog": {
+        "title": "采集笔记",
+        "keywords": "关键词",
+        "filterKeywords": "过滤关键词",
+        "count": "采集数量",
+        "conditions": "筛选条件",
+        "liked": "点赞数 >",
+        "collected": "收藏数 >",
+        "comment": "评论数 >",
+        "shared": "分享数 >"
+      }
+    },
+    "systemConfig": {
+      "sections": {
+        "tenant": "租户配置",
+        "browser": "浏览器设置",
+        "ai": "AI 配置",
+        "db": "数据库连接",
+        "dbPool": "数据库连接池",
+        "scope": "数据范围"
+      },
+      "items": {
+        "TENANT_ID": "租户 ID",
+        "BROWSER_ATTACH": "浏览器接管",
+        "BROWSER_HEADLESS": "无头模式",
+        "BROWSER_PORT": "浏览器端口",
+        "AI_PROVIDER": "AI 提供商",
+        "AI_API_KEY": "API 密钥",
+        "AI_BASE_URL": "基础 URL",
+        "AI_MODEL_NAME": "模型名称",
+        "DB_TYPE": "数据库类型",
+        "DB_HOST": "主机地址",
+        "DB_PORT": "端口",
+        "DB_USER": "用户名",
+        "DB_PASSWORD": "密码",
+        "DB_NAME": "数据库名",
+        "DB_ECHO": "SQL 输出 (调试)",
+        "SQLITE_FILE": "SQLite 文件路径",
+        "DB_POOL_MIN_SIZE": "最小连接数",
+        "DB_POOL_MAX_SIZE": "最大连接数",
+        "DB_CONNECT_TIMEOUT": "连接超时 (秒)",
+        "DB_CHARSET": "字符集",
+        "tenantScope": "租户数据范围"
+      },
+      "descriptions": {
+        "tenantScope": "设置当前会话访问的数据范围（仅管理员有效）"
+      },
+      "options": {
+        "deepseek": "Deepseek",
+        "openai": "OpenAI",
+        "aliyun": "阿里云 (通义千问)"
+      },
+      "actions": {
+        "reset": "重置为默认值"
+      }
+    },
+    "account": {
+      "settings": "账号设置",
+      "cookiePlaceholder": "请输入 Cookie",
+      "addCookie": "添加 Cookie",
+      "cookieAdded": "已添加 cookie",
+      "systemEnv": "系统环境",
+      "leftWindowStatus": "左侧窗口状态",
+      "attached": "已吸附",
+      "detached": "未吸附",
+      "visible": "可见",
+      "hidden": "隐藏",
+      "focused": "聚焦",
+      "unfocused": "失焦",
+      "autoRefresh": "自动刷新",
+      "manualRefresh": "手动刷新",
+      "refresh": "刷新",
+      "windowId": "窗口 ID",
+      "loading": "加载状态",
+      "loadingState": {
+        "loading": "加载中",
+        "idle": "空闲"
+      },
+      "devTools": "开发者工具",
+      "on": "开启",
+      "off": "关闭",
+      "screenId": "屏幕 ID",
+      "scale": "缩放比例",
+      "resolution": "分辨率",
+      "accountList": "账号列表",
+      "edit": "修改",
+      "editAccount": "修改账号",
+      "confirm": "确定",
+      "toggleLogin": "切换登录态",
+      "deleteConfirm": "删除确认",
+      "deletePrompt": "确定删除账号“{name}”吗？",
+      "cancel": "取消",
+      "deleteSuccess": "删除成功",
+      "delete": "删除",
+      "proxy": {
+        "title": "代理管理",
+        "open": "管理代理",
+        "searchPlaceholder": "按名称或地址搜索",
+        "search": "搜索",
+        "add": "新增代理",
+        "edit": "编辑",
+        "delete": "删除",
+        "createTitle": "新增代理",
+        "editTitle": "编辑代理",
+        "createSuccess": "代理创建成功",
+        "updateSuccess": "代理更新成功",
+        "deleteSuccess": "代理删除成功",
+        "statusEnabled": "启用",
+        "statusDisabled": "停用",
+        "columns": {
+          "name": "名称",
+          "protocol": "协议",
+          "host": "地址",
+          "port": "端口",
+          "username": "用户名",
+          "status": "状态",
+          "description": "备注",
+          "updatedAt": "更新时间"
+        },
+        "form": {
+          "name": "名称",
+          "protocol": "协议",
+          "host": "地址",
+          "port": "端口",
+          "username": "用户名",
+          "password": "密码",
+          "status": "状态",
+          "description": "备注"
+        },
+        "rules": {
+          "name": "请输入名称",
+          "protocol": "请选择协议",
+          "host": "请输入地址",
+          "port": "请输入端口"
+        },
+        "deletePrompt": "确定删除代理“{name}”吗？",
+        "tips": {
+          "title": "代理使用说明",
+          "exclusiveMode": "独占模式",
+          "exclusiveModeDesc": "一个代理 IP 一旦被某个账号成功使用，就会与该账号绑定，其他账号不会再自动分配到这个 IP。",
+          "autoAllocation": "自动分配",
+          "autoAllocationDesc": "新启动浏览器时，系统会自动优先选择“未被使用”的闲置代理。",
+          "accountProtection": "账号保护",
+          "accountProtectionDesc": "已登录的账号在执行任务时，会自动复用其绑定的代理，确保 \"一号一IP\" ，防止跳 IP 封号。",
+          "testingDisclaimer": "当前模块为测试版本，代理是否挂载成功取决于代理本身的稳定性和网络环境。",
+          "helpWanted": "我们需要您的帮助！如果您有 SOCKS5 账号并愿意协助测试，请联系我们，这将极大地帮助我们完善功能。"
+        }
+      },
+      "columns": {
+        "name": "名字",
+        "redBookId": "红薯号",
+        "followCount": "关注",
+        "fansCount": "粉丝",
+        "likesAndCollections": "获赞与收藏",
+        "loginTime": "登录时间",
+        "lastLoginTime": "最后登录时间"
+      }
+    },
+    "commentManage": {
+      "keyword": "关键词",
+      "keywordPlaceholder": "内容/昵称关键词",
+      "noteId": "笔记ID",
+      "noteIdPlaceholder": "按笔记ID过滤",
+      "userId": "用户ID",
+      "userIdPlaceholder": "按用户ID过滤",
+      "dateRange": "日期范围",
+      "startDate": "开始日期",
+      "endDate": "结束日期",
+      "sortBy": "排序字段",
+      "time": "时间",
+      "likeCount": "点赞数",
+      "sortOrder": "排序",
+      "desc": "降序",
+      "asc": "升序",
+      "index": "编号",
+      "nickname": "昵称",
+      "exportExcel": "导出Excel",
+      "content": "内容",
+      "liked": "已点赞",
+      "ipLocation": "IP归属地",
+      "subCommentCount": "子评论",
+      "exportStart": "开始导出 Excel",
+      "exportFailed": "导出失败"
+    },
+    "crawlerTask": {
+      "createTask": "创建爬虫任务",
+      "commentCollection": "评论采集",
+      "createSuccess": "任务创建成功",
+      "noteId": "笔记 ID",
+      "noteIdPlaceholder": "请输入笔记 ID",
+      "noteUrl": "笔记链接",
+      "noteUrlPlaceholder": "请输入笔记完整链接 (可选)",
+      "maxCount": "最大采集数",
+      "maxDuration": "最大时长(秒)",
+      "unlimited": "0为不限",
+      "maxConsecutiveFailures": "最大连续失败",
+      "submit": "创建任务",
+      "reset": "重置"
+    },
+    "agentStart": {
+      "title": "Agent 启动",
+      "description": "快速启动一个新的自动化代理任务，支持多平台采集与互动。",
+      "generalBrowser": "通用浏览助手",
+      "deepBrowser": "深度浏览助手",
+      "accountNurturer": "养号达人",
+      "searchExplorer": "领域探索者",
+      "inboxManager": "消息管家",
+      "paramsConfig": "参数配置",
+      "noParams": "该模版无需配置参数",
+      "stopConditions": "停止条件 (0为不限)",
+      "maxCount": "最大采集数",
+      "maxDuration": "最大时长(秒)",
+      "maxConsecutiveFailures": "最大连续失败",
+      "maxNotesCount": "最大笔记数",
+      "maxCommentsCount": "最大评论数",
+      "restart": "重新启动",
+      "startTask": "启动任务",
+      "stopTask": "停止当前任务",
+      "unlimited": "0为不限",
+      "monitorPlaceholder": "任务启动后在此处显示监控",
+      "templateNotFound": "未找到模版信息",
+      "startSuccess": "启动成功",
+      "stopCommandSent": "停止指令已发送",
+      "startFailed": "启动失败"
+    },
+    "noteDetail": {
+      "title": "笔记详情",
+      "exportExcel": "导出Excel",
+      "keyword": "关键词",
+      "keywordPlaceholder": "标题/昵称关键词",
+      "to": "至",
+      "type": "类型",
+      "userId": "用户ID",
+      "userIdPlaceholder": "按用户ID过滤",
+      "dateRange": "日期范围",
+      "sortBy": "排序字段",
+      "createdAt": "创建时间",
+      "publishTime": "发布时间",
+      "likedCount": "获赞",
+      "collectedCount": "收藏",
+      "commentCount": "评论",
+      "shareCount": "分享",
+      "coverSize": "封面尺寸",
+      "description": "描述",
+      "descPlaceholder": "请输入描述",
+      "saveDesc": "保存描述 (本地)",
+      "tags": "标签",
+      "tagPlaceholder": "输入标签后回车",
+      "saveTags": "保存标签 (本地)",
+      "descUpdated": "描述已更新 (本地)",
+      "tagsUpdated": "标签已更新 (本地)",
+      "resources": "资源",
+      "batchDedup": "批量去重",
+      "addResource": "添加资源",
+      "image": "图片",
+      "format": "格式",
+      "dimensions": "尺寸",
+      "duration": "时长",
+      "dedup": "去重",
+      "deduplicated": "已去重",
+      "notDeduplicated": "未去重",
+      "action": "操作",
+      "uploadText": "拖拽文件到此处或点击选择",
+      "uploadTip": "支持图片与视频，最多 50 个文件",
+      "selectFile": "选择文件",
+      "add": "添加",
+      "cancel": "取消",
+      "operationSuccess": "操作成功",
+      "operationError": "操作异常",
+      "selectFileWarning": "请选择文件并确保笔记ID存在",
+      "addSuccess": "资源添加成功",
+      "addError": "添加异常"
+    },
+    "taskList": {
+      "title": "任务管理列表",
+      "refresh": "刷新",
+      "collectUserInfo": "用户信息采集",
+      "browseAgent": "Agent 浏览",
+      "stopCommandSent": "停止指令已发送",
+      "deleteSuccess": "删除成功",
+      "taskId": "任务 ID",
+      "taskType": "任务类型",
+      "status": "状态",
+      "progress": "进度",
+      "message": "消息/错误",
+      "createdAt": "创建时间",
+      "updatedAt": "更新时间",
+      "action": "操作",
+      "view": "查看",
+      "stop": "停止",
+      "delete": "删除",
+      "deleteConfirm": "确定要删除该任务吗？",
+      "resultTitle": "结果详情",
+      "taskInfo": "任务详情",
+      "collectedNotes": "采集笔记",
+      "collectedComments": "采集评论",
+      "noImage": "无图片",
+      "drawer": {
+        "collectedNotesList": "采集笔记列表",
+        "collectedCommentsList": "采集评论列表",
+        "noteDetailsList": "笔记详情列表",
+        "agentTaskDetails": "Agent 任务详情",
+        "title": "标题",
+        "noteId": "笔记ID",
+        "type": "类型",
+        "publisher": "发布者",
+        "likes": "点赞数",
+        "collects": "收藏数",
+        "comments": "评论数",
+        "shares": "分享数",
+        "cover": "封面",
+        "link": "链接",
+        "commentContent": "评论内容",
+        "commenter": "评论者",
+        "commentTime": "评论时间",
+        "replies": "回复数",
+        "description": "描述",
+        "tags": "标签",
+        "property": "属性",
+        "value": "值",
+        "notesCollected": "采集笔记数",
+        "commentsCollected": "采集评论数",
+        "consecutiveFailures": "连续失败次数",
+        "params": "参数"
+      }
+    }
+  },
+  "update": {
+    "app": "应用",
+    "core": "核心",
+    "env": {
+      "browser": "当前运行在浏览器环境中",
+      "browserAutoUpdate": "浏览器版本会自动更新，无需手动检查",
+      "desktopRequired": "如需使用完整的桌面应用功能，请下载桌面版本",
+      "webVersion": "Web版本",
+      "webAutoUpdate": "浏览器版本会自动获取最新功能，无需手动更新",
+      "currentBrowser": "当前运行环境: 浏览器",
+      "coreDesktopRequired": "核心模块仅在桌面应用可用，当前无法检查核心更新",
+      "coreWebEnvironment": "Web环境",
+      "coreDesktopRequiredDesc": "核心更新需在桌面环境下进行"
+    },
+    "check": {
+      "start": "开始检查应用更新...",
+      "complete": "应用更新检查完成",
+      "action": "检查应用更新",
+      "latest": "当前已是最新版本",
+      "notFound": "未找到可用更新",
+      "found": "发现新版本",
+      "coreStart": "开始检查核心更新...",
+      "coreComplete": "核心更新检查完成",
+      "coreAction": "检查核心更新",
+      "localExists": "检测到本地已存在更新文件，可直接安装",
+      "size": "更新大小: ",
+      "date": "发布时间: "
+    },
+    "download": {
+      "start": "开始下载更新，总大小: ",
+      "complete": "下载完成",
+      "cancelUnsupported": "取消下载暂不支持",
+      "coreApiUnavailable": "核心更新API不可用：当前为浏览器环境，无法下载核心",
+      "coreStart": "开始下载核心更新...",
+      "coreComplete": "核心更新下载完成",
+      "coreAction": "下载核心更新",
+      "canceling": "正在取消下载...",
+      "canceled": "已取消下载",
+      "cancelFailed": "取消下载失败",
+      "apiError": "核心更新API不可用"
+    },
+    "install": {
+      "start": "开始下载并安装更新...",
+      "complete": "更新安装完成，即将重启",
+      "action": "安装应用更新",
+      "coreStart": "开始安装核心更新...",
+      "coreApiUnavailable": "核心更新API不可用：当前为浏览器环境，无法安装核心",
+      "coreComplete": "核心更新安装完成",
+      "coreFailed": "安装核心更新失败"
+    },
+    "init": {
+      "complete": "应用更新组件初始化完成",
+      "coreComplete": "核心更新组件初始化完成",
+      "apiTimeout": "核心更新API初始化超时，请稍后重试",
+      "apiError": "核心更新API不可用，请确保应用已正确初始化"
+    },
+    "version": {
+      "current": "当前应用版本: ",
+      "failed": "获取应用版本失败",
+      "coreCurrent": "当前核心版本: ",
+      "coreFailed": "获取核心版本失败"
+    },
+    "log": {
+      "title": "操作日志",
+      "clear": "清空日志",
+      "empty": "暂无日志记录",
+      "success": "成功",
+      "warning": "警告",
+      "error": "错误",
+      "info": "信息",
+      "loaded": "更新管理页面已加载",
+      "coreError": "核心更新错误: ",
+      "unknownError": "未知错误"
+    },
+    "coreLog": {
+      "searchPlaceholder": "搜索",
+      "level": "类型",
+      "all": "全部",
+      "encoding": "编码",
+      "auto": "自动",
+      "autoScroll": "自动滚动",
+      "syncConsole": "同步控制台",
+      "clear": "清空",
+      "export": "导出",
+      "pause": "暂停",
+      "resume": "继续",
+      "paused": "已暂停",
+      "running": "运行中",
+      "totalLines": "总行数",
+      "exit": "退出"
+    },
+    "tabs": {
+      "core": "核心更新",
+      "app": "应用更新"
+    },
+    "panel": {
+      "control": "{label}操作控制",
+      "check": "检查{label}更新",
+      "checking": "检查中...",
+      "download": "下载{label}更新",
+      "downloading": "下载中...",
+      "install": "安装{label}更新",
+      "cancelDownload": "取消下载",
+      "status": "{label}状态",
+      "currentVersion": "当前版本:",
+      "updateStatus": "更新状态:",
+      "latestInfo": "最新版本信息",
+      "latestVersion": "最新版本:",
+      "releaseDate": "发布时间:",
+      "fileSize": "文件大小:",
+      "downloadProgress": "下载进度",
+      "noDownloadTask": "暂无下载任务",
+      "description": "更新说明"
+    }
+  },
+  "dashboard": {
+    "overview": {
+      "title": "系统概览",
+      "compareYesterday": "较昨日",
+      "up": "上升",
+      "down": "下降",
+      "flat": "持平",
+      "fetchError": "获取概览数据失败",
+      "totalComments": "累计评论",
+      "commentsUnit": "条"
+    },
+    "taskStatus": {
+      "title": "任务状态分布",
+      "seriesName": "任务状态",
+      "fetchError": "获取任务状态分布失败"
+    },
+    "trend": {
+      "title": "评论活跃趋势",
+      "days7": "7天",
+      "days30": "30天",
+      "publishCount": "发布数量",
+      "seriesName": "当日新增评论数",
+      "yAxisName": "评论条数",
+      "fetchError": "获取趋势数据失败"
+    },
+    "wordCloud": {
+      "title": "热门词云",
+      "fetchError": "获取词云数据失败"
+    },
+    "geo": {
+      "title": "评论用户地域分布",
+      "fetchError": "获取地域分布失败"
+    },
+    "heatmap": {
+      "title": "用户评论活跃时段",
+      "activity": "评论互动数",
+      "fetchError": "获取热力图数据失败"
+    },
+    "noteType": {
+      "title": "笔记类型分布",
+      "seriesName": "笔记类型",
+      "imageText": "图文",
+      "video": "视频",
+      "fetchError": "获取笔记类型分布失败"
+    },
+    "rank": {
+      "title": "热门笔记排行",
+      "column": {
+        "rank": "排名",
+        "cover": "封面",
+        "title": "标题",
+        "author": "作者",
+        "likes": "点赞数",
+        "publishTime": "发布时间"
+      },
+      "fetchError": "获取排行数据失败"
+    }
+  },
+  "MySQL": "MySQL"
+}
