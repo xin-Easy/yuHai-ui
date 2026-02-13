@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install dependencies (Ubuntu)
         if: matrix.platform == 'ubuntu-22.04'
@@ -45,7 +47,13 @@ jobs:
       - name: Extract Version
         shell: bash
         run: |
-          VERSION=${GITHUB_REF_NAME#v}
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+            TAG_NAME=${{ github.ref_name }}
+          else
+            TAG_NAME=$(git describe --tags --abbrev=0)
+            echo "Manual run detected. Using latest tag: $TAG_NAME"
+          fi
+          VERSION=${TAG_NAME#v}
           echo "TAURI_APP_VERSION=$VERSION" >> $GITHUB_ENV
           echo "VITE_VERSION=$VERSION" >> $GITHUB_ENV
           echo "Version extracted: $VERSION"
@@ -96,6 +104,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract Tag Name
+        run: |
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+            echo "RELEASE_TAG_NAME=${{ github.ref_name }}" >> $GITHUB_ENV
+          else
+            TAG_NAME=$(git describe --tags --abbrev=0)
+            echo "RELEASE_TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
+            echo "Manual run detected. Using latest tag: $TAG_NAME"
+          fi
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
@@ -109,6 +129,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ env.RELEASE_TAG_NAME }}
           files: artifacts/**/*
           draft: false
           prerelease: false
