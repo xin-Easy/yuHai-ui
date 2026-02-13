@@ -27,7 +27,12 @@ function getGitVersion() {
 }
 
 // Allow overriding via environment variables (useful for CI)
-const version = process.env.TAURI_APP_VERSION || getGitVersion();
+// Ensure version is always a valid semver string
+let version = process.env.TAURI_APP_VERSION || getGitVersion();
+if (!/^\d+\.\d+\.\d+/.test(version)) {
+  console.warn(`[Version Manager] Invalid version '${version}', falling back to '0.0.0'`);
+  version = '0.0.0';
+}
 // console.log(`[Version Manager] Current Version: ${version}`);
 
 // Inject environment variables
