@@ -61,14 +61,10 @@ jobs:
           cd src-tauri/resources
           mv yuHai-ubuntu-latest-*-portable.zip yuHai-core.zip
 
-      - name: Generate Icon (Ubuntu)
-        if: matrix.platform == 'ubuntu-22.04'
-        run: |
-          convert src-tauri/icons/icon.ico src-tauri/icons/icon.png
-          convert src-tauri/icons/icon.ico -resize 128x128 src-tauri/icons/128x128.png
-
       - name: Build the app
         uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           # No release settings, just build
           args: ''
