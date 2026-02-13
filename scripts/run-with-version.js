@@ -1,4 +1,10 @@
 import { execSync, spawn } from 'child_process';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Get version from git tags
@@ -38,14 +44,23 @@ if (args.length === 0) {
 const command = args[0];
 const commandArgs = args.slice(1);
 
-// Inject version via --config for Tauri commands
+// Handle Tauri configuration update
 if (command === 'tauri' && (commandArgs.includes('build') || commandArgs.includes('dev'))) {
-  const configConfig = { version: version };
-  // On Windows, we need to be careful with JSON escaping in shell
-  // For cmd.exe (which spawn uses with shell:true), we need to escape double quotes
-  const configStr = JSON.stringify(configConfig).replace(/"/g, '\\"');
-  commandArgs.push('--config');
-  commandArgs.push(configStr);
+  const tauriConfigPath = path.resolve(__dirname, '../src-tauri/tauri.conf.json');
+  try {
+    const configContent = fs.readFileSync(tauriConfigPath, 'utf-8');
+    const config = JSON.parse(configContent);
+    
+    // Update version
+    config.version = version;
+    
+    // Write back to file
+    fs.writeFileSync(tauriConfigPath, JSON.stringify(config, null, 2));
+    console.log(`[Version Manager] Updated tauri.conf.json version to ${version}`);
+  } catch (err) {
+    console.error(`[Version Manager] Failed to update tauri.conf.json: ${err.message}`);
+    // Continue anyway, maybe the command will succeed if version is provided elsewhere?
+  }
 }
 
 // Spawn the command
