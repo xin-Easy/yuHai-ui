@@ -53,6 +53,7 @@ jobs:
             TAG_NAME=$(git describe --tags --abbrev=0)
             echo "Manual run detected. Using latest tag: $TAG_NAME"
           fi
+          echo "RELEASE_TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
           VERSION=${TAG_NAME#v}
           echo "TAURI_APP_VERSION=$VERSION" >> $GITHUB_ENV
           echo "VITE_VERSION=$VERSION" >> $GITHUB_ENV
