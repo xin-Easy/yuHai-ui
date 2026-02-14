@@ -169,9 +169,9 @@ pnpm install
 > **⚠️ 核心资源说明**
 >
 > 启动桌面端前，请确保已下载核心引擎：
-> 1. 前往 [yuHai Core Releases](https://github.com/xin-Easy/yuHai/releases) 下载最新版 `yuhai-core.zip`。
+> 1. 前往 [yuHai Core Releases](https://github.com/xin-Easy/yuHai/releases) 下载最新版 `yuHai-core.zip`。
 > 2. 将文件放置于 `src-tauri/resources/` 目录下。
-> 3. 确保文件名为 `yuhai-core.zip` (请勿解压)。
+> 3. 确保文件名为 `yuHai-core.zip` (请勿解压)。
 
 **启动 Web 开发预览 (仅前端)**:
 ```bash
@@ -182,7 +182,7 @@ pnpm dev:web
 ```bash
 pnpm dev
 ```
-*注意：首次启动会自动解压 `yuhai-core.zip` 资源到应用数据目录。*
+*注意：首次启动会自动解压 `yuHai-core.zip` 资源到应用数据目录。*
 
 ### 构建生产包
 
