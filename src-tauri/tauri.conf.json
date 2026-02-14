@@ -41,7 +41,13 @@
         "installerIcon": "icons/icon.ico"
       }
     },
-    "targets": "all"
+    "targets": [
+      "deb",
+      "rpm",
+      "appimage",
+      "nsis",
+      "msi"
+    ]
   },
   "identifier": "yuHai-ui",
   "plugins": {
