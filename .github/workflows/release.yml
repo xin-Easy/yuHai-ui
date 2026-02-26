@@ -84,6 +84,33 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
 
+      - name: Generate signatures (Windows)
+        if: matrix.platform == 'windows-latest'
+        shell: pwsh
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        run: |
+          $keyPath = "$env:TEMP\tauri.key"
+          Set-Content -Path $keyPath -Value $env:TAURI_SIGNING_PRIVATE_KEY
+          $files = Get-ChildItem -Path "src-tauri/target/release/bundle" -Recurse -Include *.exe,*.msi
+          foreach ($file in $files) {
+            pnpm tauri signer sign -k $keyPath -p $env:TAURI_SIGNING_PRIVATE_KEY_PASSWORD -f $file.FullName
+          }
+
+      - name: Generate signatures (Linux)
+        if: matrix.platform == 'ubuntu-22.04'
+        shell: bash
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        run: |
+          KEY_PATH="/tmp/tauri.key"
+          printf "%s" "${TAURI_SIGNING_PRIVATE_KEY}" > "${KEY_PATH}"
+          find src-tauri/target/release/bundle -type f \( -name "*.AppImage" -o -name "*.deb" -o -name "*.rpm" \) -print0 | while IFS= read -r -d '' file; do
+            pnpm tauri signer sign -k "${KEY_PATH}" -p "${TAURI_SIGNING_PRIVATE_KEY_PASSWORD}" -f "${file}"
+          done
+
       - name: List bundle files (Debug)
         shell: bash
         run: |
