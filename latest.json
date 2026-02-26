@@ -1,0 +1,15 @@
+{
+  "version": "1.0.2",
+  "notes": "**Full Changelog**: https://github.com/xin-Easy/yuHai-ui/compare/v1.0.1...v1.0.2",
+  "pub_date": "2026-02-26T02:12:15Z",
+  "platforms": {
+    "windows-x86_64": {
+      "url": "https://github.com/xin-Easy/yuHai-ui/releases/download/v1.0.2/YuHai_1.0.2_x64-setup.exe",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRQmZkN0hLakxLelk3LzZhenkveXFsQkdSTk83cElYME9oaFhtQWNuMjRtTEtxTGlGMUxRZ2ZRSC9EK0lyekdyRU1RTFVyZUhWVHZsL3RpWXpJSmNMcTlIQURPZnpwR2dnPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzcyMDg1MTcxCWZpbGU6WXVIYWlfMS4wLjJfeDY0LXNldHVwLmV4ZQpkU1ROVW01Q3B0UGFObmpzNVB0MGJWUk9qRTlrSHdIenZqdE5LYWdHSGFaZ1o3ZDcxanVrS3NUN0FRbWhiWnRrTXRqcEFEWldIYmV0eTYzdDVaVDRBQT09Cg=="
+    },
+    "linux-x86_64": {
+      "url": "https://github.com/xin-Easy/yuHai-ui/releases/download/v1.0.2/YuHai_1.0.2_amd64.AppImage",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRQmZkN0hLakxLemNRT1NkZG83ZVZLbU1mVk5ZTTAwMjJQdFljK2FZaHo5OTQyWE0yeCtJOFFpZEtYK3B6WVB1VE1kWU8yb2UzbjNyaThMVTRTV0RVUlVWblE0WC9vOVFvPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzcyMDg1NjY2CWZpbGU6WXVIYWlfMS4wLjJfYW1kNjQuQXBwSW1hZ2UKbTlaWkIwcitNZ0VTSXVSQ1lrU2owQ05LTjl3VTNNTmxiSjZyUlpRY0tsSXNGL0k4cU4zNGtIMTIrQ0tlQ2N5eTczVFhmQVAyeUY5V1hVMy9KK2I4QlE9PQo="
+    }
+  }
+}
