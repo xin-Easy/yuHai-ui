@@ -117,17 +117,27 @@ jobs:
     steps:
       - name: Generate latest.json
         uses: actions/github-script@v7
-        env:
-          RELEASE_TAG_NAME: ${{ github.ref_name }}
         with:
           script: |
             const fs = require('fs');
             const owner = context.repo.owner;
             const repo = context.repo.repo;
-            const tag = process.env.RELEASE_TAG_NAME || context.ref.replace('refs/tags/', '');
-            const version = tag.replace(/^v/, '');
+            const refType = context.ref.startsWith('refs/tags/') ? 'tag' : 'other';
+            const refName = context.ref.replace('refs/tags/', '').replace('refs/heads/', '');
 
-            const release = await github.rest.repos.getReleaseByTag({ owner, repo, tag });
+            let release;
+            if (refType === 'tag' && refName.startsWith('v')) {
+              release = await github.rest.repos.getReleaseByTag({ owner, repo, tag: refName });
+            } else {
+              const releases = await github.rest.repos.listReleases({ owner, repo, per_page: 1, page: 1 });
+              if (!releases.data.length) {
+                throw new Error('No releases found for generating latest.json');
+              }
+              release = { data: releases.data[0] };
+            }
+
+            const tag = release.data.tag_name;
+            const version = tag.replace(/^v/, '');
             const assets = release.data.assets || [];
 
             const findAsset = (matcher) => assets.find((a) => matcher(a.name));
