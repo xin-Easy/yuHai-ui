@@ -131,6 +131,7 @@ jobs:
             const assets = release.data.assets || [];
 
             const findAsset = (matcher) => assets.find((a) => matcher(a.name));
+            const listAssets = () => assets.map((a) => a.name).join(', ');
             const pickSig = async (asset) => {
               if (!asset) return null;
               const res = await fetch(asset.browser_download_url, {
@@ -142,16 +143,17 @@ jobs:
               return (await res.text()).trim();
             };
 
-            const windowsAsset = findAsset((name) => name.endsWith('.exe'));
-            const windowsSigAsset = findAsset((name) => name.endsWith('.exe.sig'));
+            const windowsAsset = findAsset((name) => name.endsWith('.exe')) || findAsset((name) => name.endsWith('.msi'));
+            const windowsSigAsset =
+              findAsset((name) => name.endsWith('.exe.sig')) || findAsset((name) => name.endsWith('.msi.sig'));
             const linuxAsset = findAsset((name) => name.endsWith('.AppImage'));
             const linuxSigAsset = findAsset((name) => name.endsWith('.AppImage.sig'));
 
             if (!windowsAsset || !windowsSigAsset) {
-              throw new Error('Missing Windows updater assets (.exe / .exe.sig)');
+              throw new Error(`Missing Windows updater assets (.exe/.exe.sig or .msi/.msi.sig). Assets: ${listAssets()}`);
             }
             if (!linuxAsset || !linuxSigAsset) {
-              throw new Error('Missing Linux updater assets (.AppImage / .AppImage.sig)');
+              throw new Error(`Missing Linux updater assets (.AppImage/.AppImage.sig). Assets: ${listAssets()}`);
             }
 
             const windowsSignature = await pickSig(windowsSigAsset);
