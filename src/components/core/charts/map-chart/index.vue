@@ -16,6 +16,7 @@
   // import chinaMapJson from '@/assets/json/chinaMap.json'
   import type { MapChartProps } from '@/types/component/chart'
   import { useChart } from '@/hooks/core/useChart'
+  import { logger } from '@/utils/logger'
 
   defineOptions({ name: 'ArtMapChart' })
   
@@ -54,7 +55,7 @@
         level: (data?.level as string) || ''
       }
 
-      console.log(`选中区域: ${params.name}`, params)
+      logger.chart.debug(`选中区域: ${params.name}`, params)
 
       // 高亮选中区域
       const instance = getChartInstance()
@@ -236,7 +237,7 @@
         const module = await import('@/assets/json/chinaMap.json')
         chinaMapJson.value = module.default
       } catch (e) {
-        console.error('Failed to load map data:', e)
+        logger.chart.error('Failed to load map data:', e)
         return
       }
     }

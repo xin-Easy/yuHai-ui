@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { useSettingStore } from '@/store/modules/setting'
+import { logger } from '@/utils/logger'
 
 // 核心服务基础地址
 // 开发环境下使用 /core-api 走代理，生产环境或 Electron 环境使用绝对地址
@@ -7,9 +8,7 @@ export const CORE_BASE_URL = import.meta.env.DEV
   ? '/core-api'
   : import.meta.env.VITE_CORE_API_URL
 
-if (import.meta.env.DEV) {
-  console.log('[Core API] Base URL:', CORE_BASE_URL)
-}
+logger.http.debug('Base URL:', CORE_BASE_URL)
 
 // 创建 Axios 实例
 const service: AxiosInstance = axios.create({

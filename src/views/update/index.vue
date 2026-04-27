@@ -64,7 +64,7 @@
             <ElTag :type="getLogTagType(log.type)" size="small" style="flex-shrink: 0">
               {{ getLogTypeText(log.type) }}
             </ElTag>
-            <span style="flex-shrink: 0; color: #909399; font-size: 12px">{{
+            <span style="flex-shrink: 0; font-size: 12px; color: #909399">{{
               formatTime(log.timestamp)
             }}</span>
             <span style="flex: 1; word-break: break-all">{{ log.message }}</span>

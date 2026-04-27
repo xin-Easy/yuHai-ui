@@ -4,6 +4,7 @@
 mod core_update;
 mod core_manager;
 mod browser_sync;
+mod utils;
 
 use std::sync::{Arc, Mutex};
 use std::path::PathBuf;
@@ -11,7 +12,10 @@ use chrono::Local;
 use tauri::Manager;
 
 #[tauri::command]
-async fn get_left_window_info(app: tauri::AppHandle) -> Result<serde_json::Value, String> {
+async fn get_left_window_info(
+    app: tauri::AppHandle,
+    client: tauri::State<'_, reqwest::Client>,
+) -> Result<serde_json::Value, String> {
     let window = app.get_webview_window("main").ok_or("Main window not found")?;
     
     // Get main window info
@@ -60,9 +64,7 @@ async fn get_left_window_info(app: tauri::AppHandle) -> Result<serde_json::Value
     });
 
     // Query Kernel
-    let client = reqwest::Client::new();
-    let base_url = option_env!("VITE_CORE_API_URL").unwrap_or("http://127.0.0.1:8000");
-    let status_url = format!("{}/api/v1/browser/status", base_url.trim_end_matches('/'));
+    let status_url = format!("{}/api/v1/browser/status", crate::utils::core_api_base());
 
     // Try to get browser status from kernel
     match client.get(&status_url).send().await {
@@ -99,6 +101,12 @@ fn get_core_logs(_page: u32, _size: u32) -> Result<serde_json::Value, String> {
 }
 
 fn main() {
+    let reqwest_client = reqwest::Client::builder()
+        .no_proxy()
+        .connect_timeout(std::time::Duration::from_millis(500))
+        .timeout(std::time::Duration::from_secs(3))
+        .build()
+        .unwrap_or_else(|_| reqwest::Client::new());
     let update_state = Arc::new(Mutex::new(core_update::UpdateState {
         pending_update: None,
     }));
@@ -115,6 +123,7 @@ fn main() {
         .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_fs::init())
+        .manage(reqwest_client)
         .manage(update_state)
         .manage(core_manager::CoreState::new())
         .setup(|app| {
@@ -132,15 +141,18 @@ fn main() {
             let handle = app.handle();
             if let Ok(app_data_dir) = handle.path().app_data_dir() {
                 let core_dir = app_data_dir.join("core");
-                let kernel_zip_name = option_env!("VITE_CORE_ZIP_NAME").unwrap_or("yuHai-core.zip");
+                let kernel_zip_name = option_env!("VITE_CORE_ZIP_NAME")
+                    .unwrap_or("yuHai-core-win-x64.zip");
                 let kernel_zip_relative = PathBuf::from("resources").join(kernel_zip_name);
+                
+                log::info!("Platform-specific kernel zip name: {}", kernel_zip_name);
  
                 if !core_dir.exists() {
                     let _ = std::fs::create_dir_all(&core_dir);
                 }
  
-                // Check if kernel exists using core_manager logic (which scans subdirs)
-                let kernel_exists = core_manager::find_latest_kernel(&handle).is_some();
+                // Check if kernel exists using fast existence check (avoids running it to get version during setup)
+                let kernel_exists = core_manager::has_any_kernel(&handle);
                 
                 // Only extract if target executable does not exist
                 if !kernel_exists {
@@ -160,18 +172,18 @@ fn main() {
                     };
 
                     if abs_resource_path.exists() {
-                        println!("Found bundled kernel zip at: {:?}", abs_resource_path);
+                        log::info!("Found bundled kernel zip at: {:?}", abs_resource_path);
                         match std::fs::File::open(&abs_resource_path) {
                             Ok(file) => {
                                 match zip::ZipArchive::new(file) {
                                     Ok(mut archive) => {
                                         if let Err(e) = archive.extract(&core_dir) {
-                                            eprintln!("Failed to extract kernel zip: {}", e);
+                                            log::error!("Failed to extract kernel zip: {}", e);
                                         } else {
-                                            println!("Successfully extracted bundled kernel to: {:?}", core_dir);
+                                            log::info!("Successfully extracted bundled kernel to: {:?}", core_dir);
                                         }
                                     },
-                                    Err(e) => eprintln!("Failed to open zip archive: {}", e),
+                                    Err(e) => log::error!("Failed to open zip archive: {}", e),
                                 }
                             },
                             Err(e) => log::error!("Failed to open zip file: {}", e),
@@ -179,6 +191,8 @@ fn main() {
                     } else {
                          log::error!("Bundled kernel resource not found at: {:?} (resolved from {:?})", abs_resource_path, resource_path);
                     }
+                } else {
+                    log::info!("Kernel already exists, skipping extraction");
                 }
             }
 

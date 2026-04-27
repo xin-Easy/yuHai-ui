@@ -1,3 +1,49 @@
-/node_modules/*
-/dist/*
-/src/main.ts
+# 依赖
+node_modules
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# 构建输出
+dist
+build
+output
+
+# Rust 编译输出
+src-tauri/target
+
+# IDE 配置
+.idea
+.vscode
+*.swp
+*.swo
+
+# Git
+.git
+.gitignore
+
+# 环境文件
+.env
+.env.local
+.env.development
+.env.production
+.env.*.local
+
+# assets 资源文件 - 不需要格式化
+src/assets
+
+# 生成的文件
+src/types/auto-imports.d.ts
+src/types/components.d.ts
+src-tauri/gen
+
+# 锁文件和配置文件不需要格式化
+*.lock
+Cargo.lock
+pnpm-workspace.yaml
+
+# 地图数据文件
+src/assets/json/chinaMap.json
+
+# Tauri 资源
+src-tauri/resources

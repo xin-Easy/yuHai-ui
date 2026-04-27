@@ -47,8 +47,8 @@
 <style lang="scss" scoped>
   .flex-center {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     width: 100%;
     height: 100%;
   }

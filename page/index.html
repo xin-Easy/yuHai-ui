@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>yuhai (蒲公英引擎) — 现代化小红书数据采集工作台 | 仅供学习研究使用</title>
+  <link rel="icon" type="image/svg+xml" href="app.svg" />
+  <link rel="icon" type="image/x-icon" href="app.ico" />
+  <!-- SEO & 搜索流优化 -->
+  <meta name="description" content="⚠️ 仅供学习研究使用 | yuhai (蒲公英引擎) 是一个现代化的小红书数据采集与内容发布工作台，支持 Windows/Linux 系统，不支持 macOS，禁止用于任何商业目的。" />
+  <meta name="keywords" content="仅供学习研究, 小红书数据采集, 蒲公英引擎, yuhai, Tauri, Vue3, 数据可视化, 小红书自动化, 禁止商业使用" />
+  <meta name="author" content="xin-Easy" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://github.com/xin-Easy/yuhai-ui" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://github.com/xin-Easy/yuhai-ui" />
+  <meta property="og:title" content="yuhai (蒲公英引擎) — 现代化小红书自动化控制台" />
+  <meta property="og:description" content="⚠️ 仅供学习研究使用 | 基于 Tauri + Vue3 构建的小红书数据采集工作台。禁止用于任何商业目的。" />
+  <meta property="og:image" content="https://opengraph.githubassets.com/1/xin-Easy/yuhai-ui" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://github.com/xin-Easy/yuhai-ui" />
+  <meta name="twitter:title" content="yuhai (蒲公英引擎) — 小红书自动化工作站" />
+  <meta name="twitter:description" content="⚠️ 仅供学习研究使用 | 基于 Tauri + Vue3 的小红书数据采集工作台。禁止用于任何商业目的。支持 Windows/Linux，不支持 macOS。" />
+  <meta name="twitter:image" content="https://opengraph.githubassets.com/1/xin-Easy/yuhai-ui" />
+
+  <!-- 结构化数据 (JSON-LD) 提升搜索引擎收录展现形式 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "蒲公英引擎 (Dandelion Engine)",
+    "operatingSystem": "Windows, Linux (仅供学习研究使用，不支持 macOS)",
+    "applicationCategory": "BusinessApplication",
+    "description": "⚠️ 仅供学习研究使用 | 基于 Tauri + Vue3 构建的小红书数据采集工作台。禁止用于任何商业目的。支持 Windows/Linux 系统，不支持 macOS。",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "xin-Easy"
+    }
+  }
+  </script>
+
+  <!-- 预加载及资源优化 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===================== NAV ===================== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="logo-icon">🌊</span>
+        <span class="logo-text">yuhai</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#features" class="nav-link">功能</a>
+        <a href="#architecture" class="nav-link">架构</a>
+        <a href="#highlights" class="nav-link">亮点</a>
+        <a href="#comparison" class="nav-link">对比</a>
+        <a href="#quickstart" class="nav-link">快速开始</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+      </div>
+      <div class="nav-actions">
+        <a href="https://github.com/xin-Easy/yuhai-ui" class="btn btn-ghost" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+        <a href="#quickstart" class="btn btn-primary">立即体验</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main id="main-content">
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="hero-gradient"></div>
+      <div class="hero-grid"></div>
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+      <div class="hero-orb hero-orb-3"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot" style="background:#8b5cf6; box-shadow:0 0 12px #8b5cf6;"></span>
+        ✨ 全新搭载超真实的 AI 智能养号引擎
+      </div>
+      <h1 class="hero-title">
+        为爆款而生，<br /><span class="gradient-text">小红书全自动养号</span><br />与数据矩阵大屏
+      </h1>
+      <p class="hero-desc">
+        抛弃容易被风控的机械脚本。全新引入 AI 大语言模型，100% 模拟真人点赞、停留、搜索浏览。<br />
+        在沉浸式的桌面可视化 UI 下，让程序安静地帮你把废号养出高权重。
+      </p>
+      
+      <div class="hero-actions">
+        <a href="#quickstart" class="btn btn-lg btn-primary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> 
+          体验 AI 极速养号
+        </a>
+        <a href="https://github.com/xin-Easy/yuhai-ui" class="btn btn-lg btn-outline" target="_blank" rel="noopener">
+          前端 UI 源码
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+      </div>
+
+      <!-- 优雅的免责声明栏 -->
+      <div style="font-size: 13px; color: var(--text-tertiary); max-width: 500px; margin: -20px auto 40px; padding: 10px 16px; border-radius: 8px; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1);">
+        ⚠️ <strong>研究专用免责声明：</strong>此项目仅供前端技术演示与学习探讨。运行环境支持 Win/Linux，严禁用于任何商业目的与灰产获利。
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-value" data-count="100">0</span><span class="stat-suffix">+</span>
+          <span class="stat-label">AI真机拟人行为</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value" data-count="24">0</span><span class="stat-suffix">/7</span>
+          <span class="stat-label">自动挂机托管</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value" data-count="0">0</span><span class="stat-suffix">封号</span>
+          <span class="stat-label">浏览器沙盒隔离</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value" data-count="0">0</span><span class="stat-suffix">基础</span>
+          <span class="stat-label">图形化点击上手</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ===================== FEATURES ===================== -->
+  <section class="section features" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">产品功能</span>
+        <h2 class="section-title">全链路<span class="gradient-text">数据与业务矩阵</span></h2>
+        <p class="section-desc">一次部署，从全网信息监听、结构化沉淀到自动化发布一站式搞定</p>
+      </div>
+      <div class="features-grid">
+        <!-- Card 1 -->
+        <div class="feature-card" id="feature-passive">
+          <div class="feature-icon-wrap">
+            <div class="feature-icon" style="--icon-hue: 210;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+          </div>
+          <h3 class="feature-title">无感伴随式采集</h3>
+          <p class="feature-desc">
+            抛开繁琐配置。只需在内置浏览器中自由浏览，工具将在后台自动提取并结构化所有看到的笔记与评论。
+          </p>
+          <div class="feature-tag-row">
+            <span class="feature-tag">用即是采</span>
+            <span class="feature-tag">实时同步</span>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="feature-card" id="feature-collect">
+          <div class="feature-icon-wrap">
+            <div class="feature-icon" style="--icon-hue: 160;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+          </div>
+          <h3 class="feature-title">无水印资源提取</h3>
+          <p class="feature-desc">
+            原画质无损保存。无论是主页批量扫描，还是关键词定向抓取，均能一键下载无水印图片与高清视频素材。
+          </p>
+          <div class="feature-tag-row">
+            <span class="feature-tag">4K视频</span>
+            <span class="feature-tag">原图提取</span>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="feature-card" id="feature-ai">
+          <div class="feature-icon-wrap">
+            <div class="feature-icon" style="--icon-hue: 280;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2V6a4 4 0 0 1 4-4z"/><path d="M9 14v4a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-4"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="9" r="1"/></svg>
+            </div>
+          </div>
+          <h3 class="feature-title">AI 拟人化浏览</h3>
+          <p class="feature-desc">
+            内建智能养号模型。不仅是爬虫，更能模拟真人停留、随机互动、翻页探索，安全有效地提升账号权重。
+          </p>
+          <div class="feature-tag-row">
+            <span class="feature-tag">行为拟真</span>
+            <span class="feature-tag">安全养号</span>
+          </div>
+        </div>
+        <!-- Card 4 -->
+        <div class="feature-card" id="feature-creator">
+          <div class="feature-icon-wrap">
+            <div class="feature-icon" style="--icon-hue: 30;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+          </div>
+          <h3 class="feature-title">自动化内容矩阵</h3>
+          <p class="feature-desc">
+            从素材获取到加工发布一气呵成。系统内置像素级图像去重引擎（去除MD5特征），自动将文案、图片发布至多账号。
+          </p>
+          <div class="feature-tag-row">
+            <span class="feature-tag">跨域搬运</span>
+            <span class="feature-tag">抗查重</span>
+          </div>
+        </div>
+        <!-- Card 5 -->
+        <div class="feature-card" id="feature-dashboard">
+          <div class="feature-icon-wrap">
+            <div class="feature-icon" style="--icon-hue: 120;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+            </div>
+          </div>
+          <h3 class="feature-title">沉浸式数据大屏</h3>
+          <p class="feature-desc">
+            拒绝冷冰冰的数据表，直接在 UI 内查看精美的趋势图表、笔记词云图及流量热力图，并可一键导出 Excel。
+          </p>
+          <div class="feature-tag-row">
+            <span class="feature-tag">ECharts</span>
+            <span class="feature-tag">Excel 导出</span>
+          </div>
+        </div>
+        <!-- Card 6 -->
+        <div class="feature-card" id="feature-api">
+          <div class="feature-icon-wrap">
+            <div class="feature-icon" style="--icon-hue: 340;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+          </div>
+          <h3 class="feature-title">多开与账号隔离</h3>
+          <p class="feature-desc">
+            本地多工作区隔离机制。完美隐藏浏览器指纹特征，支持多个运营身份切换，彼此安全隔离互不干扰。
+          </p>
+          <div class="feature-tag-row">
+            <span class="feature-tag">指纹伪装</span>
+            <span class="feature-tag">隐私沙盒</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FRONTEND ARCHITECTURE ===================== -->
+  <section class="section architecture" id="architecture">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">技术艺术</span>
+        <h2 class="section-title">原生级别的<span class="gradient-text">交互体验</span></h2>
+        <p class="section-desc">基于 Tauri 与 Vue 打造，突破性能边界的设计美学</p>
+      </div>
+      <div class="arch-wrapper">
+        <div class="arch-flow">
+          <!-- layer 1: UI Engine -->
+          <div class="arch-layer">
+            <div class="arch-layer-label">前端展现层 (View)</div>
+            <div class="arch-nodes">
+              <div class="arch-node arch-node-green">
+                <div class="arch-node-icon">⚡</div>
+                <div class="arch-node-name">Vue 3 setup</div>
+                <div class="arch-node-sub">响应式驱动</div>
+              </div>
+              <div class="arch-node arch-node-blue">
+                <div class="arch-node-icon">🎨</div>
+                <div class="arch-node-name">Element Plus</div>
+                <div class="arch-node-sub">精美组件库</div>
+              </div>
+              <div class="arch-node arch-node-purple">
+                <div class="arch-node-icon">🖌️</div>
+                <div class="arch-node-name">Tailwind CSS</div>
+                <div class="arch-node-sub">原子化视觉约束</div>
+              </div>
+            </div>
+          </div>
+          <div class="arch-connector">
+            <svg width="24" height="40" viewBox="0 0 24 40"><path d="M12 0 L12 40" stroke="url(#connGrad)" stroke-width="2" stroke-dasharray="4 3" fill="none"/></svg>
+          </div>
+          <!-- layer 2: State -->
+          <div class="arch-layer">
+            <div class="arch-layer-label">状态分析层 (State & Analytics)</div>
+            <div class="arch-nodes">
+              <div class="arch-node arch-node-orange">
+                <div class="arch-node-icon">🍍</div>
+                <div class="arch-node-name">Pinia</div>
+                <div class="arch-node-sub">持久化状态管理</div>
+              </div>
+              <div class="arch-node arch-node-blue">
+                <div class="arch-node-icon">📊</div>
+                <div class="arch-node-name">Apache ECharts</div>
+                <div class="arch-node-sub">交互式数据看板</div>
+              </div>
+            </div>
+          </div>
+          <div class="arch-connector">
+            <svg width="24" height="40" viewBox="0 0 24 40"><path d="M12 0 L12 40" stroke="url(#connGrad)" stroke-width="2" stroke-dasharray="4 3" fill="none"/></svg>
+          </div>
+          <!-- layer 3: Rust Core -->
+          <div class="arch-layer">
+            <div class="arch-layer-label">系统跨端桥接 (Native Bridge)</div>
+            <div class="arch-nodes">
+              <div class="arch-node arch-node-orange">
+                <div class="arch-node-icon">🦀</div>
+                <div class="arch-node-name">Tauri v2</div>
+                <div class="arch-node-sub">Rust 底层通信引擎</div>
+              </div>
+              <div class="arch-node arch-node-purple">
+                <div class="arch-node-icon">🔒</div>
+                <div class="arch-node-name">Local Sandbox</div>
+                <div class="arch-node-sub">安全的本地 I/O</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HIGHLIGHTS ===================== -->
+  <section class="section highlights" id="highlights">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">为什么选择蒲公英引擎?</span>
+        <h2 class="section-title">告别脚本，<span class="gradient-text">拥抱桌面应用</span></h2>
+        <p class="section-desc">⚠️ <strong>郑重声明：</strong>本项目仅供学习研究使用，禁止用于商业目的。<br />
+不要把时间浪费在配置环境代码上，您的精力应该专注于前端技术学习与交流。</p>
+      </div>
+      <div class="highlights-grid">
+        <div class="highlight-card" id="hl-passive">
+          <div class="hl-num">01</div>
+          <h3 class="hl-title">真正的“开箱即用”</h3>
+          <p class="hl-desc">
+            无语面对黑压压的终端控制台。下载、解压、双击图标即可直接开启拥有精美界面的应用，无需安装复杂的依赖与系统环境。
+          </p>
+        </div>
+        <div class="highlight-card" id="hl-async">
+          <div class="hl-num">02</div>
+          <h3 class="hl-title">Tauri 带来的低消耗</h3>
+          <p class="hl-desc">
+            厌倦了每次打开 Electron 应用电脑风扇狂转？基于 Rust 构建的 Tauri 把体积和内存压缩到了极致，保证您多账号同开时系统依然干爽流畅。
+          </p>
+        </div>
+        <div class="highlight-card" id="hl-di">
+          <div class="hl-num">03</div>
+          <h3 class="hl-title">直观的可视化体验</h3>
+          <p class="hl-desc">
+            数据不仅仅是冷冰冰的 CSV 文件。工作台内集成了丰富的 ECharts 可视化图表，采集进度、关键词热词聚类，鼠标一点即刻呈现。
+          </p>
+        </div>
+        <div class="highlight-card" id="hl-multidb">
+          <div class="hl-num">04</div>
+          <h3 class="hl-title">极高的安全性隐私</h3>
+          <p class="hl-desc">
+            没有云端服务器上传，您的所有资产、Cookie 配置、抓取内容均被 100% 留存在本地设备硬盘内进行加密保护，平台绝不过问。
+          </p>
+        </div>
+        <div class="highlight-card" id="hl-agent">
+          <div class="hl-num">05</div>
+          <h3 class="hl-title">自动阻断封控机制</h3>
+          <p class="hl-desc">
+            内置复杂的模拟真人活动算法体系，对图片去水印后采用特有的像素重绘技术，有效避开各大内容平台的指纹侦测追踪。
+          </p>
+        </div>
+        <div class="highlight-card" id="hl-tenant">
+          <div class="hl-num">06</div>
+          <h3 class="hl-title">优雅的深色模式工作流</h3>
+          <p class="hl-desc">
+            全局设计优先考虑创作者工作习惯，无缝支持系统级的 Light / Dark 模式无缝切换，连深夜监控数据都不刺眼。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== COMPARISON TABLE ===================== -->
+  <section class="section comparison" id="comparison">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">核心优势</span>
+        <h2 class="section-title">蒲公英引擎 vs <span class="gradient-text">传统方案</span></h2>
+        <p class="section-desc">为什么选择蒲公英引擎作为您的小红书数据解决方案？</p>
+      </div>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>对比维度</th>
+              <th>yuhai (蒲公英引擎)</th>
+              <th>传统 Python 脚本 / 浏览器插件</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>交互体验</strong></td>
+              <td class="highlight-cell">🖥️ <strong>现代化 GUI</strong><br/><span class="cell-desc">数据看板一目了然，拖拖拽拽完成操作</span></td>
+              <td class="lowlight-cell">❌ 仅黑底白字命令行<br/><span class="cell-desc">操作门槛高，需要技术背景</span></td>
+            </tr>
+            <tr>
+              <td><strong>系统资源</strong></td>
+              <td class="highlight-cell">⚡ <strong>Rust 驱动</strong><br/><span class="cell-desc">超低内存占用，多账号同开也流畅</span></td>
+              <td class="lowlight-cell">🐢 Electron/Python 进程<br/><span class="cell-desc">资源消耗大，电脑风扇狂转</span></td>
+            </tr>
+            <tr>
+              <td><strong>数据管理</strong></td>
+              <td class="highlight-cell">📊 <strong>ECharts 可视化</strong><br/><span class="cell-desc">趋势图、词云图、热力图，支持 Excel 一键导出</span></td>
+              <td class="lowlight-cell">❌ 仅存 CSV/JSON<br/><span class="cell-desc">需手动处理分析，效率低下</span></td>
+            </tr>
+            <tr>
+              <td><strong>安全性</strong></td>
+              <td class="highlight-cell">🔐 <strong>本地加密存储</strong><br/><span class="cell-desc">指纹深度伪装，数据不留云端</span></td>
+              <td class="lowlight-cell">⚠️ 易被平台检测<br/><span class="cell-desc">账号封禁风险高</span></td>
+            </tr>
+            <tr>
+              <td><strong>功能覆盖</strong></td>
+              <td class="highlight-cell">✅ <strong>采集 + 养号 + 发布</strong><br/><span class="cell-desc">全流程覆盖，一站式解决方案</span></td>
+              <td class="lowlight-cell">❌ 通常仅单一功能<br/><span class="cell-desc">需要多个工具组合使用</span></td>
+            </tr>
+            <tr>
+              <td><strong>部署方式</strong></td>
+              <td class="highlight-cell">🚀 <strong>开箱即用</strong><br/><span class="cell-desc">下载解压双击即可，无需配置环境</span></td>
+              <td class="lowlight-cell">🔧 需要安装 Python 环境<br/><span class="cell-desc">配置依赖繁琐，容易出错</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TECH STACK UI ===================== -->
+  <section class="section techstack" id="techstack">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">前端技术栈</span>
+        <h2 class="section-title">采用<span class="gradient-text">前沿技术</span>构建</h2>
+      </div>
+      <div class="tech-grid">
+        <div class="tech-item"><div class="tech-logo">⚡</div><span>Vue 3 (Composition API)</span></div>
+        <div class="tech-item"><div class="tech-logo">🦀</div><span>Tauri v2 (Rust)</span></div>
+        <div class="tech-item"><div class="tech-logo">💎</div><span>Element Plus</span></div>
+        <div class="tech-item"><div class="tech-logo">🎨</div><span>Tailwind CSS v4</span></div>
+        <div class="tech-item"><div class="tech-logo">📊</div><span>ECharts</span></div>
+        <div class="tech-item"><div class="tech-logo">🍍</div><span>Pinia</span></div>
+        <div class="tech-item"><div class="tech-logo">📘</div><span>TypeScript</span></div>
+        <div class="tech-item"><div class="tech-logo">🚀</div><span>Vite</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== QUICKSTART ===================== -->
+  <section class="section quickstart" id="quickstart">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">安装指南</span>
+        <h2 class="section-title">像安装普通软件<span class="gradient-text">一样简单</span></h2>
+        <p class="section-desc">没有复杂的环境配置，即刻使用并获得生产力</p>
+      </div>
+      <div class="steps">
+        <div class="step" id="step-1">
+          <div class="step-number">1</div>
+          <div class="step-body">
+            <h3 class="step-title">获取最新安装包</h3>
+            <p class="step-desc">前往 <a href="https://github.com/xin-Easy/yuhai-ui/releases" target="_blank" rel="noopener">yuhai-ui Releases</a> 页面，根据您的电脑系统（Win/Linux）下载对应的安装程序。</p>
+          </div>
+        </div>
+        <div class="step" id="step-2">
+          <div class="step-number">2</div>
+          <div class="step-body">
+            <h3 class="step-title">配置核心引擎包 (可选)</h3>
+            <p class="step-desc">如果你是开发者，你可以单独下载底层引擎 <a href="https://github.com/xin-Easy/yuHai/releases">YuHai-core.zip</a> 资源包放置在安装目录下，桌面端启动时会智能识别引擎并进行联动。</p>
+          </div>
+        </div>
+        <div class="step" id="step-3">
+          <div class="step-number">3</div>
+          <div class="step-body">
+            <h3 class="step-title">一键启动</h3>
+            <p class="step-desc">双击桌面上的“蒲公英引擎”图标。进入控制台界面后，在可视化仪表盘中创建你的第一个自动化采集任务吧！</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="section faq" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">FAQ</span>
+        <h2 class="section-title">常见<span class="gradient-text">问题</span></h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item" id="faq-0">
+          <summary class="faq-question">
+            <span>⚠️ 可以用于商业目的吗？</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-answer">
+            <p><strong>❌ 严禁用于任何商业目的或灰黑产行为。</strong><br />
+            本项目仅供个人学习、前端交互技术验证研究专用。使用本项目即表示您同意：<br />
+            1. 不会将本项目用于任何商业行为<br />
+            2. 不会将本项目用于任何违法、违规用途<br />
+            3. 仅将本项目用于合法的学习与技术研究目的<br />
+            4. 自行承担使用本项目的一切风险</p>
+          </div>
+        </details>
+        <details class="faq-item" id="faq-1">
+          <summary class="faq-question">
+            <span>这款软件是免费提供的吗？需要注册账号吗？</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-answer">
+            <p>是的，本软件及底层代码均作为开源项目公开交流，<strong>100% 免费</strong>。本工具本身没有服务器强制网络校验，您下载后无需在我们这边注册任何账号，点开即用。</p>
+          </div>
+        </details>
+        <details class="faq-item" id="faq-2">
+          <summary class="faq-question">
+            <span>⚠️ 支持 Mac 系统吗 (Apple Silicon / Intel)？</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-answer">
+            <p>⚠️ <strong>当前版本支持 Windows 和 Linux 系统</strong>，不支持 macOS。<br />
+            如需 macOS 版本，请耐心等待后续更新。<br />
+            <em>本项目仅供学习研究使用，请勿用于商业目的。</em></p>
+          </div>
+        </details>
+        <details class="faq-item" id="faq-3">
+          <summary class="faq-question">
+            <span>导出数据有上限吗？支持什么格式？</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-answer">
+            <p>数据全部存储于您自己的电脑上，<strong>没有任何上限限制</strong>。您可以将任意规模的笔记列表、热门评论等，从控制台通过一键式操作保存为便于传输的 <code>.xlsx</code> (Excel) 或标准 JSON 格式进行分析。</p>
+          </div>
+        </details>
+        <details class="faq-item" id="faq-4">
+          <summary class="faq-question">
+            <span>如何保证采集操作时不被官方轻易封禁？</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-answer">
+            <p>蒲公英引擎通过模拟真实的基于浏览器的键盘与鼠标交互，并动态随机生成行为延迟。同时自带 "伴随采集功能"——您在客户端内正常用鼠标刷内容时，它正在同步悄悄存储所有滑过的数据，完全等同真人行为，风控概率极低。</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA ===================== -->
+  <section class="section cta" id="cta">
+    <div class="container">
+      <div class="cta-inner">
+        <div class="cta-bg-orb"></div>
+        <h2 class="cta-title">准备好升级你的生产力了吗？</h2>
+        <p class="cta-desc">化繁为简，立即使用蒲公英引擎开启你的自动化之旅体验。</p>
+        <p class="cta-warning">⚠️ <strong>本项目仅供学习研究使用，禁止用于任何商业目的或灰黑产行为。支持 Windows/Linux 系统，不支持 macOS。</strong></p>
+        <div class="cta-actions">
+          <a href="https://github.com/xin-Easy/yuhai-ui/releases" class="btn btn-lg btn-primary" target="_blank" rel="noopener">
+            Windows/Linux 客户端下载（仅供学习）
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </a>
+          <a href="https://github.com/xin-Easy/yuhai-ui" class="btn btn-lg btn-outline" target="_blank" rel="noopener">
+            探索 UI 源码
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <span class="logo-icon">🌊</span>
+            <span class="logo-text">YuHai (蒲公英)</span>
+          </div>
+          <p class="footer-tagline">现代化小红书数据采集与运营工作台 | 仅供学习研究使用 | 支持 Windows/Linux，不支持 macOS</p>
+          <p class="footer-disclaimer">⚠️ <strong>郑重声明：</strong>本项目仅供个人学习、前端交互技术验证研究专用，<strong>严禁</strong>用于任何商业目的或灰黑产行为。<br />
+          当前版本<strong>支持 Windows/Linux 系统</strong>，不支持 macOS。</p>
+        </div>
+        <div class="footer-links-group">
+          <div class="footer-col">
+            <h4>资源</h4>
+            <a href="#quickstart">极速入门</a>
+            <a href="https://github.com/xin-Easy/yuhai-ui" target="_blank" rel="noopener">UI 仓库</a>
+            <a href="https://github.com/xin-Easy/yuhai" target="_blank" rel="noopener">服务端源码</a>
+          </div>
+          <div class="footer-col">
+            <h4>交流</h4>
+            <a href="https://github.com/xin-Easy/yuhai-ui/issues" target="_blank" rel="noopener">需求建议</a>
+            <a href="mailto:yuhai2553@gmail.com">联系我们</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 — 2026 YuHai. 仅供学习与交流使用。</p>
+      </div>
+    </div>
+  </footer>
+  </main>
+
+  <!-- 延迟加载脚本以提升首屏渲染性能 (SEO优化关键) -->
+  <script src="main.js" defer></script>
+</body>
+</html>

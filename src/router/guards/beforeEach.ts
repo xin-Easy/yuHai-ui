@@ -33,7 +33,7 @@
  */
 import type { Router, RouteLocationNormalized, NavigationGuardNext } from 'vue-router'
 import { nextTick } from 'vue'
-import NProgress from 'nprogress'
+import progress from '@/utils/progress'
 import { useSettingStore } from '@/store/modules/setting'
 import { useMenuStore } from '@/store/modules/menu'
 import { setWorktab } from '@/utils/navigation'
@@ -138,7 +138,7 @@ async function handleRouteGuard(
 
   // 启动进度条
   if (settingStore.showNprogress) {
-    NProgress.start()
+    progress.start()
   }
 
   // 2. 检查路由初始化是否已失败（防止死循环）

@@ -164,174 +164,183 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed } from 'vue'
-  import { useRouter } from 'vue-router'
-  import { useI18n } from 'vue-i18n'
-  import {
-    VideoPlay,
-    ArrowRight,
-    DataLine,
-    User,
-    Setting,
-    Monitor,
-    Odometer
-  } from '@element-plus/icons-vue'
-  import OverviewCards from '../dashboard/components/OverviewCards.vue'
+import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import {
+  VideoPlay,
+  ArrowRight,
+  DataLine,
+  User,
+  Setting,
+  Monitor,
+  Odometer
+} from '@element-plus/icons-vue'
+import OverviewCards from '../dashboard/components/OverviewCards.vue'
 
-  defineOptions({ name: 'HomePage' })
+defineOptions({ name: 'HomePage' })
 
-  const router = useRouter()
-  const { t } = useI18n()
-  const calendarValue = ref(new Date())
+const router = useRouter()
+const { t } = useI18n()
+const calendarValue = ref(new Date())
 
-  // Greeting Logic
-  const greeting = computed(() => {
-    const hour = new Date().getHours()
-    if (hour < 6) return '夜深了'
-    if (hour < 9) return '早上好'
-    if (hour < 12) return '上午好'
-    if (hour < 14) return '中午好'
-    if (hour < 17) return '下午好'
-    if (hour < 19) return '傍晚好'
-    return '晚上好'
-  })
+// Greeting Logic
+const greeting = computed(() => {
+  const hour = new Date().getHours()
+  if (hour < 6) return '夜深了'
+  if (hour < 9) return '早上好'
+  if (hour < 12) return '上午好'
+  if (hour < 14) return '中午好'
+  if (hour < 17) return '下午好'
+  if (hour < 19) return '傍晚好'
+  return '晚上好'
+})
 
-  const currentDate = computed(() => {
-    return new Intl.DateTimeFormat('zh-CN', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      weekday: 'long'
-    }).format(new Date())
-  })
+const currentDate = computed(() => {
+  return new Intl.DateTimeFormat('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    weekday: 'long'
+  }).format(new Date())
+})
 
-  // Shortcuts Data
-  const shortcuts = [
-    {
-      title: '数据仪表盘',
-      path: '/dashboard/console',
-      icon: Odometer,
-      bgClass: 'bg-purple-100 dark:bg-purple-900/30',
-      iconClass: 'text-purple-600 dark:text-purple-400'
-    },
-    {
-      title: '账号管理',
-      path: '/core/account',
-      icon: User,
-      bgClass: 'bg-orange-100 dark:bg-orange-900/30',
-      iconClass: 'text-orange-600 dark:text-orange-400'
-    },
-    {
-      title: '系统配置',
-      path: '/core/system-config',
-      icon: Setting,
-      bgClass: 'bg-teal-100 dark:bg-teal-900/30',
-      iconClass: 'text-teal-600 dark:text-teal-400'
-    },
-    {
-      title: '日志监控',
-      path: '/core/system-log', // Assuming this route exists or similar
-      icon: DataLine,
-      bgClass: 'bg-pink-100 dark:bg-pink-900/30',
-      iconClass: 'text-pink-600 dark:text-pink-400'
-    }
-  ]
-
-  const handleShortcut = (item: any) => {
-    if (item.path) {
-      router.push(item.path)
-    }
+// Shortcuts Data
+const shortcuts = [
+  {
+    title: '数据仪表盘',
+    path: '/dashboard/console',
+    icon: Odometer,
+    bgClass: 'bg-purple-100 dark:bg-purple-900/30',
+    iconClass: 'text-purple-600 dark:text-purple-400'
+  },
+  {
+    title: '账号管理',
+    path: '/core/account',
+    icon: User,
+    bgClass: 'bg-orange-100 dark:bg-orange-900/30',
+    iconClass: 'text-orange-600 dark:text-orange-400'
+  },
+  {
+    title: '系统配置',
+    path: '/core/system-config',
+    icon: Setting,
+    bgClass: 'bg-teal-100 dark:bg-teal-900/30',
+    iconClass: 'text-teal-600 dark:text-teal-400'
+  },
+  {
+    title: '日志监控',
+    path: '/core/system-log', // Assuming this route exists or similar
+    icon: DataLine,
+    bgClass: 'bg-pink-100 dark:bg-pink-900/30',
+    iconClass: 'text-pink-600 dark:text-pink-400'
   }
+]
+
+const handleShortcut = (item: any) => {
+  if (item.path) {
+    router.push(item.path)
+  }
+}
 </script>
 
 <style scoped lang="scss">
-  .home-container {
-    background-color: var(--default-bg-color);
+.home-container {
+  background-color: var(--default-bg-color);
+}
+
+.custom-calendar {
+  --el-calendar-border: none;
+  --el-calendar-header-border-bottom: none;
+
+  :deep(.el-calendar__header) {
+    padding: 16px 0 8px;
   }
 
-  .custom-calendar {
-    --el-calendar-border: none;
-    --el-calendar-header-border-bottom: none;
+  :deep(.el-calendar__title) {
+    width: 100%;
+  }
 
-    :deep(.el-calendar__header) {
-      padding: 16px 0 8px 0;
+  :deep(.el-calendar__body) {
+    padding: 0;
+  }
+
+  :deep(.el-calendar-table thead th) {
+    padding: 12px 0;
+    font-size: 0.85rem;
+    font-weight: normal;
+    color: var(--el-text-color-secondary);
+  }
+
+  :deep(.el-calendar-table td) {
+    padding: 4px;
+    border: none;
+  }
+
+  :deep(.el-calendar-table .el-calendar-day) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    margin: 0 auto;
+    font-size: 0.9rem;
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+      background-color: var(--el-color-primary-light-9);
     }
-    :deep(.el-calendar__title) {
-      width: 100%;
-    }
-    :deep(.el-calendar__body) {
-      padding: 0;
-    }
-    :deep(.el-calendar-table thead th) {
-      padding: 12px 0;
-      color: var(--el-text-color-secondary);
-      font-weight: normal;
-      font-size: 0.85rem;
-    }
-    :deep(.el-calendar-table td) {
-      border: none;
-      padding: 4px;
-    }
-    :deep(.el-calendar-table .el-calendar-day) {
-      height: 32px;
-      width: 32px;
-      margin: 0 auto;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+  }
+
+  :deep(.el-calendar-table td.is-selected .el-calendar-day) {
+    font-weight: 600;
+    color: white;
+    background-color: var(--el-color-primary);
+    box-shadow: 0 4px 12px var(--el-color-primary-light-5);
+  }
+
+  :deep(.el-calendar-table td.is-today .el-calendar-day) {
+    position: relative;
+    font-weight: 600;
+    color: var(--el-color-primary);
+
+    &::after {
+      position: absolute;
+      bottom: 3px;
+      left: 50%;
+      width: 4px;
+      height: 4px;
+      content: '';
+      background-color: currentcolor;
       border-radius: 50%;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      font-size: 0.9rem;
-      
-      &:hover {
-        background-color: var(--el-color-primary-light-9);
-      }
+      transform: translateX(-50%);
     }
-    :deep(.el-calendar-table td.is-selected .el-calendar-day) {
-      background-color: var(--el-color-primary);
-      color: white;
-      box-shadow: 0 4px 12px var(--el-color-primary-light-5);
-      font-weight: 600;
+  }
+  // Fix: When today is selected, dot should be white
+  :deep(.el-calendar-table td.is-selected.is-today .el-calendar-day) {
+    color: white;
+
+    &::after {
+      background-color: white;
     }
-    :deep(.el-calendar-table td.is-today .el-calendar-day) {
-      color: var(--el-color-primary);
-      font-weight: 600;
-      position: relative;
-      
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 3px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 4px;
-        height: 4px;
-        border-radius: 50%;
-        background-color: currentColor;
-      }
-    }
-    // Fix: When today is selected, dot should be white
-    :deep(.el-calendar-table td.is-selected.is-today .el-calendar-day) {
-      color: white;
-      &::after {
-        background-color: white;
-      }
-    }
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
 
-  .animate-fade-in-up {
-    animation: fadeInUp 0.5s ease-out;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+}
 </style>

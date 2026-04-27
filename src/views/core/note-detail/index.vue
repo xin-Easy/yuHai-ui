@@ -24,7 +24,6 @@
       class="art-table-card"
       shadow="never"
       :body-style="{ padding: '0px' }"
-      style="margin-top: 0px"
     >
       <Table
         :loading="loading"

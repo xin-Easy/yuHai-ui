@@ -299,16 +299,19 @@
       font-weight: 600;
       color: var(--art-text-gray-800);
     }
+
     .settings {
-      padding: 12px;
       min-height: 160px;
+      padding: 12px;
     }
+
     .env-bar {
       display: flex;
-      align-items: center;
       gap: 10px;
-      padding: 12px 12px 0 12px;
+      align-items: center;
+      padding: 12px 12px 0;
     }
+
     .env-grid {
       padding: 12px;
     }
@@ -317,4 +320,3 @@
     }
   }
 </style>
-

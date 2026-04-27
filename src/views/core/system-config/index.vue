@@ -25,9 +25,9 @@
                 <div class="text-xs text-gray-400 dark:text-gray-500 font-mono mt-0.5">
                   {{ item.key }}
                 </div>
-                <div v-if="item.description" class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{
-                  item.description
-                }}</div>
+                <div v-if="item.description" class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                  {{ item.description }}
+                </div>
               </div>
 
               <div class="w-64 flex justify-end">
@@ -294,7 +294,7 @@
         res.forEach((item) => {
           // Track existing keys
           existingKeys.value.add(item.key)
-          
+
           let val = item.value
 
           // Simple type casting based on definition
@@ -350,7 +350,7 @@
         })
         existingKeys.value.add(key)
       }
-      
+
       ElMessage.success('Saved')
     } catch (error) {
       console.error(error)
@@ -367,7 +367,7 @@
         await deleteConfig(key)
         existingKeys.value.delete(key)
       }
-      
+
       // Reset local state to default
       const def = findDef(key)
       if (def) {
@@ -389,7 +389,7 @@
 
 <style scoped>
   .system-config {
-    background-color: var(--default-bg-color);
     min-height: 100%;
+    background-color: var(--default-bg-color);
   }
 </style>

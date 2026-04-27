@@ -19,23 +19,14 @@
           <ElButton @click="handleExport">
             {{ t('core.noteManage.export') }}
           </ElButton>
-          <ElButton 
-            type="danger" 
-            :disabled="!selectedIds.length" 
-            @click="handleBatchDelete"
-          >
+          <ElButton type="danger" :disabled="!selectedIds.length" @click="handleBatchDelete">
             {{ t('core.noteManage.batchDelete') }}
           </ElButton>
         </template>
       </SearchBar>
     </div>
 
-    <ElCard
-      class="art-table-card"
-      shadow="never"
-      :body-style="{ padding: '0px' }"
-      style="margin-top: 0px"
-    >
+    <ElCard class="art-table-card" shadow="never" :body-style="{ padding: '0px' }">
       <Table
         ref="tableRef"
         :loading="loading"
@@ -48,11 +39,7 @@
       />
     </ElCard>
 
-    <NoteCollectDialog
-      v-model:visible="collectVisible"
-      @success="handleSearch"
-    />
-
+    <NoteCollectDialog v-model:visible="collectVisible" @success="handleSearch" />
   </div>
 </template>
 
@@ -61,11 +48,7 @@
   import { useI18n } from 'vue-i18n'
   import { ElMessage, ElButton, ElMessageBox, ElImage, ElTag } from 'element-plus'
   import TipsPanel from '@/components/core/widget/tips-panel/index.vue'
-  import {
-    searchNotes,
-    exportNotesToExcel,
-    batchDeleteNotes
-  } from '@/api/automation/note'
+  import { searchNotes, exportNotesToExcel, batchDeleteNotes } from '@/api/automation/note'
   import NoteCollectDialog from './components/NoteCollectDialog.vue'
   import { mittBus } from '@/utils/sys'
 
@@ -133,23 +116,25 @@
       showOverflowTooltip: true,
       formatter: (row: any) => {
         return h('div', { style: 'display: flex; align-items: center; gap: 8px;' }, [
-          row.cover_url ? h(ElImage, { 
-            src: row.cover_url, 
-            style: 'width: 40px; height: 40px; border-radius: 4px;',
-            fit: 'cover',
-            previewSrcList: [row.cover_url],
-            previewTeleported: true
-          }) : null,
+          row.cover_url
+            ? h(ElImage, {
+                src: row.cover_url,
+                style: 'width: 40px; height: 40px; border-radius: 4px;',
+                fit: 'cover',
+                previewSrcList: [row.cover_url],
+                previewTeleported: true
+              })
+            : null,
           h('span', row.display_title || '-')
         ])
       }
     },
     { prop: 'note_type', label: t('core.noteManage.type'), width: 100 },
-    { 
-      prop: 'user_nickname', 
+    {
+      prop: 'user_nickname',
       label: '用户',
       minWidth: 120,
-      formatter: (row: any) => row.user_nickname || row.user_id 
+      formatter: (row: any) => row.user_nickname || row.user_id
     },
     { prop: 'liked_count', label: '点赞', width: 80 },
     { prop: 'collected_count', label: '收藏', width: 80 },
@@ -183,14 +168,16 @@
         keyword: searchForm.keyword || undefined,
         note_type: searchForm.note_type || undefined,
         user_id: searchForm.user_id || undefined,
-        date_range: searchForm.daterange ? {
-          start: searchForm.daterange[0],
-          end: searchForm.daterange[1]
-        } : undefined,
+        date_range: searchForm.daterange
+          ? {
+              start: searchForm.daterange[0],
+              end: searchForm.daterange[1]
+            }
+          : undefined,
         page: pagination.current,
         page_size: pagination.size
       }
-      
+
       const res = await searchNotes(params)
       tableData.value = res.notes || []
       pagination.total = res.total || 0
@@ -212,7 +199,7 @@
   }
 
   const handleSelectionChange = (rows: any[]) => {
-    selectedIds.value = rows.map(r => r.note_id)
+    selectedIds.value = rows.map((r) => r.note_id)
   }
 
   // Collect Dialog
@@ -223,9 +210,13 @@
 
   const handleBatchDelete = async () => {
     try {
-      await ElMessageBox.confirm(`确定删除选中的 ${selectedIds.value.length} 条笔记吗？`, 'Warning', {
-        type: 'warning'
-      })
+      await ElMessageBox.confirm(
+        `确定删除选中的 ${selectedIds.value.length} 条笔记吗？`,
+        'Warning',
+        {
+          type: 'warning'
+        }
+      )
       await batchDeleteNotes(selectedIds.value)
       ElMessage.success(t('core.noteManage.deleteSuccess'))
       mittBus.emit('refresh-stats')
@@ -254,7 +245,7 @@
 </script>
 
 <style scoped lang="scss">
-.note-manage {
-  // Add custom styles if needed
-}
+  .note-manage {
+    // Add custom styles if needed
+  }
 </style>

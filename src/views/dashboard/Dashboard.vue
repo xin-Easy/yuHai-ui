@@ -22,8 +22,8 @@
 
 <style scoped lang="scss">
   .dashboard-container {
+    min-height: 100vh;
     padding: 16px;
     background-color: var(--el-bg-color-page);
-    min-height: 100vh;
   }
 </style>

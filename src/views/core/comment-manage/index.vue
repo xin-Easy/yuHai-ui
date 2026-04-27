@@ -20,12 +20,7 @@
       </SearchBar>
     </div>
 
-    <ElCard
-      class="art-table-card"
-      shadow="never"
-      :body-style="{ padding: '0px' }"
-      style="margin-top: 0px"
-    >
+    <ElCard class="art-table-card" shadow="never" :body-style="{ padding: '0px' }">
       <Table
         :loading="loading"
         :data="tableData"
@@ -35,7 +30,6 @@
         @pagination:current-change="handleCurrentChange"
       />
     </ElCard>
-
   </div>
 </template>
 
@@ -44,7 +38,6 @@
   import { useI18n } from 'vue-i18n'
   import { ElMessage } from 'element-plus'
   import { searchComments, exportCommentsExcel } from '@/api/automation/comment'
-  import TipsPanel from '@/components/core/widget/tips-panel/index.vue'
 
   defineOptions({ name: 'CoreCommentManage' })
 
@@ -212,6 +205,7 @@
       font-weight: 600;
       color: var(--art-text-gray-800);
     }
+
     .search-actions {
       padding: 4px 12px;
     }

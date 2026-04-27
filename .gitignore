@@ -4,8 +4,11 @@ dist
 dist-ssr
 *.local
 .cursorrules
+src-tauri
+.idea
 
 # Auto-generated files
 src/types/import/auto-imports.d.ts
 src/types/import/components.d.ts
+pnpm-lock.yaml
 .auto-import.json

@@ -31,7 +31,7 @@
       "icons/icon.ico"
     ],
     "resources": [
-      "resources/yuHai-core.zip"
+      "resources/yuHai-core-win-x64.zip"
     ],
     "windows": {
       "wix": {

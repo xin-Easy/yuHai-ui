@@ -286,10 +286,12 @@
   .update-panel {
     .el-card {
       margin-bottom: 20px;
+
       &:last-child {
         margin-bottom: 0;
       }
     }
+
     .el-progress {
       margin-bottom: 12px;
     }

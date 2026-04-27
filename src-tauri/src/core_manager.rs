@@ -18,10 +18,7 @@ impl CoreState {
     }
 }
 
-// Helper to extract version from filename - REMOVED
-// fn extract_version(filename: &str) -> Option<Version> { ... }
-
-// Helper to get directories to scan (duplicated from core_update.rs to avoid circular deps or complex refactoring)
+// Helper to get directories to scan
 fn get_scan_dirs<R: Runtime>(app: &AppHandle<R>) -> Vec<PathBuf> {
     let mut dirs = Vec::new();
     if let Ok(dir) = env::var("VITE_CORE_INSTALL_DIR") {
@@ -51,7 +48,16 @@ fn get_scan_dirs<R: Runtime>(app: &AppHandle<R>) -> Vec<PathBuf> {
 }
 
 // Helper to extract version from binary execution
-fn get_binary_version(path: &PathBuf) -> Option<Version> {
+fn get_binary_version(path: &PathBuf, re: &Regex) -> Option<Version> {
+    let version_file_path = path.with_file_name(format!("{}.version", path.file_name().unwrap_or_default().to_string_lossy()));
+    if version_file_path.exists() {
+        if let Ok(content) = std::fs::read_to_string(&version_file_path) {
+            if let Ok(v) = Version::parse(content.trim()) {
+                return Some(v);
+            }
+        }
+    }
+
     #[cfg(target_os = "windows")]
     use std::os::windows::process::CommandExt;
 
@@ -64,10 +70,12 @@ fn get_binary_version(path: &PathBuf) -> Option<Version> {
     match cmd.output() {
         Ok(output) => {
             let stdout = String::from_utf8_lossy(&output.stdout);
-            let re = Regex::new(r"Version:\s*(\d+\.\d+\.\d+)").ok()?;
             if let Some(caps) = re.captures(&stdout) {
                 if let Some(m) = caps.get(1) {
-                    return Version::parse(m.as_str()).ok();
+                    if let Ok(v) = Version::parse(m.as_str()) {
+                        let _ = std::fs::write(&version_file_path, m.as_str());
+                        return Some(v);
+                    }
                 }
             }
             None
@@ -76,16 +84,37 @@ fn get_binary_version(path: &PathBuf) -> Option<Version> {
     }
 }
 
-pub fn find_latest_kernel<R: Runtime>(app: &AppHandle<R>) -> Option<PathBuf> {
+pub fn has_any_kernel<R: Runtime>(app: &AppHandle<R>) -> bool {
     let scan_dirs = get_scan_dirs(app);
-    let mut max_version = Version::new(0, 0, 0);
-    let mut best_path: Option<PathBuf> = None;
-
+    let exe_name = option_env!("VITE_CORE_EXE_NAME")
+        .unwrap_or(if cfg!(target_os = "windows") { "yuHai.exe" } else { "yuHai" });
     for dir in scan_dirs {
-        let exe_name = option_env!("VITE_CORE_EXE_NAME").unwrap_or("yuHai.exe");
         let path = dir.join(exe_name);
         if path.exists() && path.is_file() {
-            if let Some(v) = get_binary_version(&path) {
+            return true;
+        }
+    }
+    false
+}
+
+pub fn find_latest_kernel<R: Runtime>(app: &AppHandle<R>) -> Option<PathBuf> {
+    let scan_dirs = get_scan_dirs(app);
+    // Compile regex once
+    let re = Regex::new(r"Version:\s*(\d+\.\d+\.\d+)").unwrap();
+    let mut max_version = Version::new(0, 0, 0);
+    let mut best_path: Option<PathBuf> = None;
+    
+    let exe_name = option_env!("VITE_CORE_EXE_NAME")
+        .unwrap_or(if cfg!(target_os = "windows") { "yuHai.exe" } else { "yuHai" });
+
+    log::info!("Searching for kernel executable: {}", exe_name);
+
+    for dir in scan_dirs {
+        let path = dir.join(exe_name);
+        if path.exists() && path.is_file() {
+            log::info!("Found kernel at: {:?}", path);
+            if let Some(v) = get_binary_version(&path, &re) {
+                log::info!("Kernel version: {:?}", v);
                 if v > max_version {
                     max_version = v;
                     best_path = Some(path);
@@ -183,10 +212,13 @@ pub fn stop_core(state: tauri::State<'_, CoreState>) -> Result<(), String> {
 }
 
 pub fn shutdown_core_gracefully(state: &CoreState) {
-    let base_url = option_env!("VITE_CORE_API_URL").unwrap_or("http://127.0.0.1:8000");
-    let shutdown_url = format!("{}/api/v1/system/shutdown", base_url.trim_end_matches('/'));
+    let shutdown_url = format!("{}/api/v1/system/shutdown", crate::utils::core_api_base());
 
-    let client = reqwest::blocking::Client::new();
+    let client = reqwest::blocking::Client::builder()
+        .no_proxy()
+        .connect_timeout(std::time::Duration::from_millis(500))
+        .build()
+        .unwrap_or_else(|_| reqwest::blocking::Client::new());
     match client.post(&shutdown_url)
         .timeout(std::time::Duration::from_millis(get_core_shutdown_http_timeout_ms()))
         .send() {
@@ -214,11 +246,14 @@ pub fn shutdown_core_gracefully(state: &CoreState) {
 
 fn wait_for_core_and_navigate() {
     std::thread::spawn(|| {
-        let base_url = option_env!("VITE_CORE_API_URL").unwrap_or("http://127.0.0.1:8000");
-        let navigate_url = format!("{}/api/v1/browser/navigate", base_url.trim_end_matches('/'));
-        let check_url = format!("{}/docs", base_url.trim_end_matches('/'));
+        let navigate_url = format!("{}/api/v1/browser/navigate", crate::utils::core_api_base());
+        let check_url = format!("{}/docs", crate::utils::core_api_base());
 
-        let client = reqwest::blocking::Client::new();
+        let client = reqwest::blocking::Client::builder()
+            .no_proxy()
+            .connect_timeout(std::time::Duration::from_millis(500))
+            .build()
+            .unwrap_or_else(|_| reqwest::blocking::Client::new());
         let max_retries = get_core_ready_retry_count();
         let timeout = std::time::Duration::from_millis(get_core_ready_http_timeout_ms());
         let retry_interval = std::time::Duration::from_millis(get_core_ready_retry_interval_ms());

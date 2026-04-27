@@ -48,13 +48,13 @@
 <style scoped lang="scss">
   .dashboard-card {
     margin-bottom: 16px;
-    border-radius: 12px;
     border: none;
+    border-radius: 12px;
     transition: all 0.3s ease;
 
     &:hover {
+      box-shadow: 0 12px 32px rgb(0 0 0 / 8%);
       transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
     }
 
     :deep(.el-card__header) {
@@ -68,16 +68,16 @@
 
     .card-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
 
       .title-area {
         display: flex;
         align-items: center;
 
         .title {
-          font-weight: 600;
           font-size: 16px;
+          font-weight: 600;
           color: var(--el-text-color-primary);
         }
 
@@ -93,8 +93,8 @@
     }
 
     .card-content {
-      width: 100%;
       position: relative;
+      width: 100%;
     }
   }
 </style>

@@ -100,9 +100,8 @@ async fn sync_browser_position<R: tauri::Runtime>(window: &WebviewWindow<R>) {
         window_state: "normal".to_string(), // Assume normal for now
     };
 
-    let client = reqwest::Client::new();
-    let base_url = option_env!("VITE_CORE_API_URL").unwrap_or("http://127.0.0.1:8000");
-    let browser_api_url = format!("{}/api/v1/browser/position", base_url.trim_end_matches('/'));
+    let client = window.state::<reqwest::Client>();
+    let browser_api_url = format!("{}/api/v1/browser/position", crate::utils::core_api_base());
 
     // We ignore errors here as we don't want to crash or spam logs too much, 
     // but logging debug info is good.

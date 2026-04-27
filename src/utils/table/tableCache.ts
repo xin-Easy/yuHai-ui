@@ -5,7 +5,7 @@
  *
  * ## 主要功能
  *
- * - 基于参数的智能缓存键生成（使用 ohash）
+ * - 基于参数的智能缓存键生成（使用简单的 hash 函数）
  * - LRU（最近最少使用）缓存淘汰策略
  * - 缓存过期时间管理
  * - 缓存大小限制和自动清理
@@ -32,7 +32,19 @@
  * @module utils/table/tableCache
  * @author xingguang
  */
-import { hash } from 'ohash'
+import { logger } from '@/utils/logger'
+
+// 简单的 hash 函数，用于生成缓存键
+const simpleHash = (params: unknown): string => {
+  const str = JSON.stringify(params)
+  let hash = 0
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i)
+    hash = (hash << 5) - hash + char
+    hash = hash & hash // Convert to 32bit integer
+  }
+  return Math.abs(hash).toString(36)
+}
 
 // 缓存失效策略枚举
 export enum CacheInvalidationStrategy {
@@ -85,15 +97,15 @@ export class TableCache<T> {
   }
 
   // 内部日志工具
-  private log(message: string, ...args: any[]) {
+  private log(message: string, ...args: unknown[]) {
     if (this.enableLog) {
-      console.log(`[TableCache] ${message}`, ...args)
+      logger.table.debug(message, ...args)
     }
   }
 
   // 生成稳定的缓存键
   private generateKey(params: unknown): string {
-    return hash(params)
+    return simpleHash(params)
   }
 
   // 🔧 优化：增强类型安全性

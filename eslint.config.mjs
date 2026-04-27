@@ -1,19 +1,19 @@
-// 从 URL 和路径模块中导入必要的功能
+// ESLint 配置文件
+// 与 Prettier 配合使用，统一代码风格
 import fs from 'fs'
 import path, { dirname } from 'path'
 import { fileURLToPath } from 'url'
 
-// 从 ESLint 插件中导入推荐配置
 import pluginJs from '@eslint/js'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import pluginVue from 'eslint-plugin-vue'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
-// 使用 import.meta.url 获取当前模块的路径
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
+// 加载 auto-import 配置
 let autoImportConfig = { globals: {} }
 try {
   autoImportConfig = JSON.parse(
@@ -24,11 +24,12 @@ try {
 }
 
 export default [
-  // 指定文件匹配规则
+  // 基础文件匹配
   {
     files: ['**/*.{js,mjs,cjs,ts,vue}']
   },
-  // 指定全局变量和环境
+
+  // 全局变量
   {
     languageOptions: {
       globals: {
@@ -36,44 +37,97 @@ export default [
       }
     }
   },
-  // 扩展配置
+
+  // 继承推荐配置
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   ...pluginVue.configs['flat/essential'],
-  // 自定义规则
+
+  // 自定义规则 - 与 Prettier 对齐
   {
-    // 针对所有 JavaScript、TypeScript 和 Vue 文件应用以下配置
     files: ['**/*.{js,mjs,cjs,ts,vue}'],
 
     languageOptions: {
       globals: {
-        // 合并从 autoImportConfig 中读取的全局变量配置
         ...autoImportConfig.globals,
-        // TypeScript 全局命名空间
         Api: 'readonly'
       }
     },
+
     rules: {
-      quotes: ['error', 'single'], // 使用单引号
-      semi: ['error', 'never'], // 语句末尾不加分号
-      'no-var': 'error', // 要求使用 let 或 const 而不是 var
-      '@typescript-eslint/no-explicit-any': 'off', // 禁用 any 检查
-      'vue/multi-word-component-names': 'off', // 禁用对 Vue 组件名称的多词要求检查
-      'no-multiple-empty-lines': ['warn', { max: 1 }], // 不允许多个空行
-      'no-unexpected-multiline': 'error' // 禁止空余的多行
+      // Prettier 负责格式化，这里只保留质量检查规则
+      quotes: ['error', 'single'],
+      semi: ['error', 'never'],
+      'no-var': 'error',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      'vue/multi-word-component-names': 'off',
+      'no-multiple-empty-lines': ['warn', { max: 1 }],
+      'no-unexpected-multiline': 'error',
+      'accessor-pairs': 'error',
+      'block-scoped-var': 'error',
+      'consistent-return': 'warn',
+      'default-case': 'warn',
+      'eqeqeq': ['error', 'always'],
+      'no-alert': 'warn',
+      'no-console': 'warn',
+      'no-debugger': 'warn',
+      'no-empty': 'warn',
+      'no-eval': 'error',
+      'no-extend-native': 'error',
+      'no-extra-bind': 'error',
+      'no-implicit-coercion': 'warn',
+      'no-new': 'warn',
+      'no-return-await': 'error',
+      'no-throw-literal': 'error',
+      'no-useless-escape': 'off',
+      'no-with': 'error',
+      'prefer-const': 'error',
+      'require-await': 'error',
+      'yoda': 'error'
     }
   },
-  // vue 规则
+
+  // Vue 特定规则
   {
     files: ['**/*.vue'],
     languageOptions: {
-      parserOptions: { parser: tseslint.parser }
+      parserOptions: {
+        parser: tseslint.parser
+      }
+    },
+    rules: {
+      'vue/no-v-html': 'off',
+      'vue/require-default-prop': 'off',
+      'vue/require-explicit-emits': 'off',
+      'vue/multi-word-component-names': 'off',
+      'vue/no-setup-props-reactivity-rules': 'off'
     }
   },
+
+  // TypeScript 特定规则
+  {
+    files: ['**/*.ts'],
+    rules: {
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-non-null-assertion': 'off'
+    }
+  },
+
   // 忽略文件
   {
-    ignores: ['node_modules', 'dist', 'public', '.vscode/**', 'src/assets/**']
+    ignores: [
+      'node_modules',
+      'dist',
+      'public',
+      '.vscode/**',
+      'src/assets/**',
+      '**/*.min.js',
+      'coverage/**'
+    ]
   },
-  // prettier 配置
+
+  // Prettier 配置 - 自动禁用冲突规则
   eslintPluginPrettierRecommended
 ]

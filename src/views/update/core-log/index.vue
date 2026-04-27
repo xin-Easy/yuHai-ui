@@ -50,10 +50,10 @@
     <el-card class="log-card">
       <template #header>
         <div class="card-header">
-          <div class="status"
-            ><span :class="['dot', pause ? 'paused' : 'running']"></span
-            >{{ pause ? t('update.coreLog.paused') : t('update.coreLog.running') }}</div
-          >
+          <div class="status">
+            <span :class="['dot', pause ? 'paused' : 'running']"></span
+            >{{ pause ? t('update.coreLog.paused') : t('update.coreLog.running') }}
+          </div>
           <div class="metrics">
             <span>{{ t('update.coreLog.totalLines') }} {{ logs.length }}</span>
             <span>stdout {{ stdoutCount }}</span>
@@ -77,6 +77,7 @@
   import { onMounted, onBeforeUnmount, reactive, ref, computed } from 'vue'
   import { useI18n } from 'vue-i18n'
   import { listen } from '@tauri-apps/api/event'
+  import { logger } from '@/utils/logger'
 
   const { t } = useI18n()
 
@@ -146,7 +147,7 @@
     logs.push(item)
     if (logs.length > 2000) logs.splice(0, logs.length - 2000)
     if (syncConsole.value) {
-      console.log(`[Core][${type}] ${text}`)
+      logger.update.debug(`[${type}] ${text}`)
     }
     if (autoScroll.value && logBox.value) {
       requestAnimationFrame(() => {
@@ -155,7 +156,6 @@
       })
     }
   }
-
   const filtered = computed(() => {
     return logs.filter((l) => {
       const byLevel = level.value === 'all' ? true : l.type === level.value
@@ -227,83 +227,100 @@
     gap: 12px;
     height: 100%;
   }
+
   .toolbar {
     display: flex;
-    align-items: center;
     gap: 8px;
+    align-items: center;
   }
+
   .toolbar-item {
     min-width: 120px;
   }
+
   .log-card {
     flex: 1;
     overflow: hidden;
   }
+
   .log-box {
     height: 100%;
+    padding: 8px 12px;
     overflow: auto;
     font-family:
       ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
       monospace;
     font-size: 13px;
     line-height: 1.6;
-    padding: 8px 12px;
-    background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
     color: #e5e7eb;
+    background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
   }
+
   .log-line {
     display: flex;
     gap: 8px;
     padding: 2px 0;
   }
+
   .type-tag {
     min-width: 72px;
     text-transform: uppercase;
   }
+
   .log-line .ts {
     color: #9ca3af;
   }
+
   .log-line .tag {
-    color: #666;
     min-width: 56px;
+    color: #666;
   }
+
   .log-line.stdout .text {
     color: #10b981;
   }
+
   .log-line.stderr .text,
   .log-line.error .text {
     color: #ef4444;
   }
+
   .log-line.info .text {
     color: #60a5fa;
   }
+
   .log-line.exit .text {
     color: #f59e0b;
   }
 
   .card-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
   }
+
   .status {
     display: flex;
-    align-items: center;
     gap: 8px;
+    align-items: center;
     color: #6b7280;
   }
+
   .dot {
+    display: inline-block;
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    display: inline-block;
   }
+
   .dot.running {
     background: #10b981;
   }
+
   .dot.paused {
     background: #f59e0b;
   }
+
   .metrics {
     display: flex;
     gap: 10px;

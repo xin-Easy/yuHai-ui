@@ -7,8 +7,7 @@
  */
 import { RouteLocationNormalized, RouteRecordRaw } from 'vue-router'
 import AppConfig from '@/config'
-import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
+import progress from '@/utils/progress'
 import i18n, { $t } from '@/locales'
 
 /** 扩展的路由配置类型 */
@@ -18,7 +17,7 @@ export type AppRouteRecordRaw = RouteRecordRaw & {
 
 /** 顶部进度条配置 */
 export const configureNProgress = () => {
-  NProgress.configure({
+  progress.configure({
     easing: 'ease',
     speed: 600,
     showSpinner: false,

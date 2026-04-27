@@ -1,0 +1,45 @@
+# EditorConfig 配置
+# 与 ESLint + Prettier 配合使用，确保编辑器一致性
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# JavaScript, TypeScript, Vue, JSON
+[*.{js,mjs,cjs,ts,vue,json}]
+indent_style = space
+indent_size = 2
+quote_type = single
+
+# HTML
+[*.html]
+indent_style = space
+indent_size = 2
+
+# CSS, SCSS
+[*.{css,scss,less}]
+indent_style = space
+indent_size = 2
+
+# Markdown
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = off
+
+# YAML
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+# Makefile
+[Makefile]
+indent_style = tab
+
+# Shell
+[*.sh]
+indent_style = space
+indent_size = 2

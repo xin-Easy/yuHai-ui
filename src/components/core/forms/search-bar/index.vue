@@ -319,13 +319,13 @@
 
 <style lang="scss" scoped>
   .art-search-bar {
-    padding: 10px 20px 0;
-    // border: none !important;
-    // box-shadow: none !important;
-    // background: transparent !important;
+    padding: 16px 20px 12px;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
 
     :deep(.el-form-item) {
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .action-column {
@@ -337,12 +337,24 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: flex-end;
-        margin-bottom: 12px;
+        padding-top: 4px;
+        margin-bottom: 8px;
+        border-top: 1px dashed var(--art-border-color-light, rgb(0 0 0 / 6%));
       }
 
       .form-buttons {
         display: flex;
-        gap: 8px;
+        gap: 10px;
+
+        .el-button {
+          font-weight: 500;
+          border-radius: 6px;
+          transition: all 0.25s ease;
+
+          &:hover {
+            transform: translateY(-1px);
+          }
+        }
       }
     }
   }
@@ -350,13 +362,15 @@
   // 响应式优化
   @media (width <= 768px) {
     .art-search-bar {
-      padding: 16px 16px 0;
+      padding: 16px 16px 12px;
 
       .action-column {
         .action-buttons-wrapper {
           flex-direction: column;
           gap: 8px;
           align-items: stretch;
+          padding-top: 0;
+          border-top: none;
 
           .form-buttons {
             justify-content: center;

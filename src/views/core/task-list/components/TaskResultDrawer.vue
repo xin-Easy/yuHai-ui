@@ -6,71 +6,64 @@
         <el-radio-button v-if="availableViews.includes('notes')" label="notes">
           {{ t('core.taskList.collectedNotes') }}
         </el-radio-button>
-        <el-radio-button v-if="availableViews.includes('comments')" label="comments"
-          >{{ t('core.taskList.collectedComments') }}</el-radio-button
-        >
+        <el-radio-button v-if="availableViews.includes('comments')" label="comments">{{
+          t('core.taskList.collectedComments')
+        }}</el-radio-button>
       </el-radio-group>
     </div>
 
-    <el-table v-loading="loading" :data="tableData" border style="width: 100%">
-      <template v-for="col in columns" :key="col.prop">
-        <el-table-column
-          :prop="col.prop"
-          :label="col.label"
-          :min-width="col.width || 120"
-          show-overflow-tooltip
-        >
-          <template v-if="col.isImage" #default="{ row }">
-            <el-image
-              v-if="col.prop === 'cover_url' && row.cover_resource_id"
-              :src="getNoteResourceImageUrl(row.cover_resource_id)"
-              :preview-src-list="[getNoteResourceImageUrl(row.cover_resource_id)]"
-              fit="cover"
-              class="w-16 h-16 rounded"
-              hide-on-click-modal
-              preview-teleported
-            />
-            <el-image
-              v-else-if="row[col.prop]"
-              :src="row[col.prop]"
-              :preview-src-list="[row[col.prop]]"
-              fit="cover"
-              class="w-16 h-16 rounded"
-              hide-on-click-modal
-              preview-teleported
-            />
-            <span v-else class="text-gray-400">{{ t('core.taskList.noImage') }}</span>
-          </template>
-          <template v-else-if="col.isLink" #default="{ row }">
-            <a
-              v-if="row[col.prop]"
-              :href="row[col.prop]"
-              target="_blank"
-              class="text-blue-500 hover:underline"
-            >
-              {{ row[col.prop] }}
-            </a>
-          </template>
-        </el-table-column>
+    <ArtTable
+      ref="tableRef"
+      :loading="loading"
+      :columns="columns"
+      :data="tableData"
+      border
+      :pagination="pagination"
+      @pagination:size-change="handleSizeChange"
+      @pagination:current-change="handleCurrentChange"
+    >
+      <template v-for="col in columns" :key="col.prop + '_template'" #[col.prop]="{ row }">
+        <template v-if="col.isImage">
+          <el-image
+            v-if="col.prop === 'cover_url' && row.cover_resource_id"
+            :src="getNoteResourceImageUrl(row.cover_resource_id)"
+            :preview-src-list="[getNoteResourceImageUrl(row.cover_resource_id)]"
+            fit="cover"
+            class="w-16 h-16 rounded"
+            hide-on-click-modal
+            preview-teleported
+          />
+          <el-image
+            v-else-if="row[col.prop]"
+            :src="row[col.prop]"
+            :preview-src-list="[row[col.prop]]"
+            fit="cover"
+            class="w-16 h-16 rounded"
+            hide-on-click-modal
+            preview-teleported
+          />
+          <span v-else class="text-gray-400">{{ t('core.taskList.noImage') }}</span>
+        </template>
+        <template v-else-if="col.isLink">
+          <a
+            v-if="row[col.prop]"
+            :href="row[col.prop]"
+            target="_blank"
+            class="text-blue-500 hover:underline"
+          >
+            {{ row[col.prop] }}
+          </a>
+        </template>
+        <template v-else>
+          {{ row[col.prop] }}
+        </template>
       </template>
-    </el-table>
-
-    <div class="mt-4 flex justify-end">
-      <el-pagination
-        v-model:current-page="currentPage"
-        v-model:page-size="pageSize"
-        :page-sizes="[10, 20, 50, 100]"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
-    </div>
+    </ArtTable>
   </el-drawer>
 </template>
 
 <script setup lang="ts">
-  import { ref, watch } from 'vue'
+  import { ref, watch, reactive } from 'vue'
   import { useI18n } from 'vue-i18n'
   import {
     getTaskNotes,
@@ -80,6 +73,8 @@
     normalizeTaskStats
   } from '@/api/automation/task'
   import { getNoteResourceImageUrl } from '@/api/automation/note'
+  import ArtTable from '@/components/core/tables/table/index.vue'
+  import type { ColumnOption } from '@/types'
 
   const props = defineProps<{
     modelValue: boolean
@@ -90,16 +85,20 @@
   const emit = defineEmits(['update:modelValue'])
 
   const { t } = useI18n()
+  const tableRef = ref()
   const visible = ref(props.modelValue)
   const loading = ref(false)
   const tableData = ref([])
-  const total = ref(0)
-  const currentPage = ref(1)
-  const pageSize = ref(20)
   const title = ref(t('core.taskList.resultTitle'))
-  const columns = ref<any[]>([])
+  const columns = ref<ColumnOption[]>([])
   const viewType = ref('info')
   const availableViews = ref<string[]>(['info'])
+
+  const pagination = reactive({
+    current: 1,
+    size: 20,
+    total: 0
+  })
 
   watch(
     () => props.modelValue,
@@ -116,51 +115,135 @@
     emit('update:modelValue', val)
   })
 
-  const getColumnsByType = (type: string) => {
+  const getColumnsByType = (type: string): ColumnOption[] => {
     switch (type) {
       case 'collect_notes':
       case 'notes': // Alias for browse_agent view
         title.value = t('core.taskList.drawer.collectedNotesList')
         return [
-          { prop: 'title', label: t('core.taskList.drawer.title'), width: 200 },
-          { prop: 'note_id', label: t('core.taskList.drawer.noteId'), width: 150 },
-          { prop: 'type', label: t('core.taskList.drawer.type'), width: 100 },
-          { prop: 'user_nickname', label: t('core.taskList.drawer.publisher'), width: 120 },
-          { prop: 'liked_count', label: t('core.taskList.drawer.likes'), width: 100 },
-          { prop: 'collected_count', label: t('core.taskList.drawer.collects'), width: 100 },
-          { prop: 'comment_count', label: t('core.taskList.drawer.comments'), width: 100 },
-          { prop: 'share_count', label: t('core.taskList.drawer.shares'), width: 100 },
-          { prop: 'cover_url', label: t('core.taskList.drawer.cover'), width: 120, isImage: true },
-          { prop: 'note_url', label: t('core.taskList.drawer.link'), width: 200, isLink: true }
+          { prop: 'title', label: t('core.taskList.drawer.title'), width: 200, useSlot: true },
+          { prop: 'note_id', label: t('core.taskList.drawer.noteId'), width: 150, useSlot: true },
+          { prop: 'type', label: t('core.taskList.drawer.type'), width: 100, useSlot: true },
+          {
+            prop: 'user_nickname',
+            label: t('core.taskList.drawer.publisher'),
+            width: 120,
+            useSlot: true
+          },
+          {
+            prop: 'liked_count',
+            label: t('core.taskList.drawer.likes'),
+            width: 100,
+            useSlot: true
+          },
+          {
+            prop: 'collected_count',
+            label: t('core.taskList.drawer.collects'),
+            width: 100,
+            useSlot: true
+          },
+          {
+            prop: 'comment_count',
+            label: t('core.taskList.drawer.comments'),
+            width: 100,
+            useSlot: true
+          },
+          {
+            prop: 'share_count',
+            label: t('core.taskList.drawer.shares'),
+            width: 100,
+            useSlot: true
+          },
+          {
+            prop: 'cover_url',
+            label: t('core.taskList.drawer.cover'),
+            width: 120,
+            isImage: true,
+            useSlot: true
+          },
+          {
+            prop: 'note_url',
+            label: t('core.taskList.drawer.link'),
+            width: 200,
+            isLink: true,
+            useSlot: true
+          }
         ]
       case 'collect_comments':
       case 'comments': // Alias for browse_agent view
         title.value = t('core.taskList.drawer.collectedCommentsList')
         return [
-          { prop: 'content', label: t('core.taskList.drawer.commentContent'), width: 300 },
-          { prop: 'user_nickname', label: t('core.taskList.drawer.commenter'), width: 120 },
-          { prop: 'liked_count', label: t('core.taskList.drawer.likes'), width: 100 },
-          { prop: 'create_time', label: t('core.taskList.drawer.commentTime'), width: 180 },
-          { prop: 'sub_comment_count', label: t('core.taskList.drawer.replies'), width: 100 }
+          {
+            prop: 'content',
+            label: t('core.taskList.drawer.commentContent'),
+            width: 300,
+            useSlot: true
+          },
+          {
+            prop: 'user_nickname',
+            label: t('core.taskList.drawer.commenter'),
+            width: 120,
+            useSlot: true
+          },
+          {
+            prop: 'liked_count',
+            label: t('core.taskList.drawer.likes'),
+            width: 100,
+            useSlot: true
+          },
+          {
+            prop: 'create_time',
+            label: t('core.taskList.drawer.commentTime'),
+            width: 180,
+            useSlot: true
+          },
+          {
+            prop: 'sub_comment_count',
+            label: t('core.taskList.drawer.replies'),
+            width: 100,
+            useSlot: true
+          }
         ]
       case 'collect_note_details':
         title.value = t('core.taskList.drawer.noteDetailsList')
         return [
-          { prop: 'title', label: t('core.taskList.drawer.title'), width: 200 },
-          { prop: 'desc', label: t('core.taskList.drawer.description'), width: 300 },
-          { prop: 'tags', label: t('core.taskList.drawer.tags'), width: 200 },
-          { prop: 'note_id', label: t('core.taskList.drawer.noteId'), width: 150 },
-          { prop: 'user_nickname', label: t('core.taskList.drawer.publisher'), width: 120 },
-          { prop: 'liked_count', label: t('core.taskList.drawer.likes'), width: 100 },
-          { prop: 'cover_url', label: t('core.taskList.drawer.cover'), width: 120, isImage: true },
-          { prop: 'note_url', label: t('core.taskList.drawer.link'), width: 200, isLink: true }
+          { prop: 'title', label: t('core.taskList.drawer.title'), width: 200, useSlot: true },
+          { prop: 'desc', label: t('core.taskList.drawer.description'), width: 300, useSlot: true },
+          { prop: 'tags', label: t('core.taskList.drawer.tags'), width: 200, useSlot: true },
+          { prop: 'note_id', label: t('core.taskList.drawer.noteId'), width: 150, useSlot: true },
+          {
+            prop: 'user_nickname',
+            label: t('core.taskList.drawer.publisher'),
+            width: 120,
+            useSlot: true
+          },
+          {
+            prop: 'liked_count',
+            label: t('core.taskList.drawer.likes'),
+            width: 100,
+            useSlot: true
+          },
+          {
+            prop: 'cover_url',
+            label: t('core.taskList.drawer.cover'),
+            width: 120,
+            isImage: true,
+            useSlot: true
+          },
+          {
+            prop: 'note_url',
+            label: t('core.taskList.drawer.link'),
+            width: 200,
+            isLink: true,
+            useSlot: true
+          }
         ]
       case 'browse_agent':
       case 'info': // Alias
         title.value = t('core.taskList.drawer.agentTaskDetails')
         return [
-          { prop: 'key', label: t('core.taskList.drawer.property'), width: 150 },
-          { prop: 'value', label: t('core.taskList.drawer.value'), width: 400 }
+          { prop: 'key', label: t('core.taskList.drawer.property'), width: 150, useSlot: true },
+          { prop: 'value', label: t('core.taskList.drawer.value'), width: 400, useSlot: true }
         ]
       default:
         return []
@@ -168,7 +251,7 @@
   }
 
   const handleViewChange = () => {
-    currentPage.value = 1
+    pagination.current = 1
     fetchData()
   }
 
@@ -177,8 +260,8 @@
     try {
       let res: any = null
       const params = {
-        page: currentPage.value,
-        size: pageSize.value
+        page: pagination.current,
+        size: pagination.size
       }
 
       if (props.taskType === 'browse_agent') {
@@ -217,7 +300,10 @@
             if (task.stats) {
               const s = normalizeTaskStats(task.stats)
               items.push({ key: t('core.taskList.drawer.notesCollected'), value: String(s.notes) })
-              items.push({ key: t('core.taskList.drawer.commentsCollected'), value: String(s.comments) })
+              items.push({
+                key: t('core.taskList.drawer.commentsCollected'),
+                value: String(s.comments)
+              })
               if (s.consecutive_failures > 0) {
                 items.push({
                   key: t('core.taskList.drawer.consecutiveFailures'),
@@ -261,10 +347,10 @@
 
       if (res) {
         tableData.value = res.items || []
-        total.value = res.total || 0
+        pagination.total = res.total || 0
       } else {
         tableData.value = []
-        total.value = 0
+        pagination.total = 0
       }
     } catch (error) {
       console.error('Failed to fetch task results:', error)
@@ -275,12 +361,12 @@
   }
 
   const handleSizeChange = (val: number) => {
-    pageSize.value = val
+    pagination.size = val
     fetchData()
   }
 
   const handleCurrentChange = (val: number) => {
-    currentPage.value = val
+    pagination.current = val
     fetchData()
   }
 </script>

@@ -35,6 +35,7 @@ import {
   createErrorHandler
 } from '../../utils/table/tableUtils'
 import { tableConfig } from '../../utils/table/tableConfig'
+import { logger } from '@/utils/logger'
 
 // 类型推导工具类型
 type InferApiParams<T> = T extends (params: infer P) => any ? P : never
@@ -162,20 +163,20 @@ function useTableImpl<TApiFn extends (params: any) => Promise<any>>(
   const cacheUpdateTrigger = ref(0)
 
   // 日志工具函数
-  const logger = {
+  const tableLogger = {
     log: (message: string, ...args: unknown[]) => {
       if (enableLog) {
-        console.log(`[useTable] ${message}`, ...args)
+        logger.table.debug(message, ...args)
       }
     },
     warn: (message: string, ...args: unknown[]) => {
       if (enableLog) {
-        console.warn(`[useTable] ${message}`, ...args)
+        logger.table.warn(message, ...args)
       }
     },
     error: (message: string, ...args: unknown[]) => {
       if (enableLog) {
-        console.error(`[useTable] ${message}`, ...args)
+        logger.table.error(message, ...args)
       }
     }
   }
@@ -253,22 +254,22 @@ function useTableImpl<TApiFn extends (params: any) => Promise<any>>(
     switch (strategy) {
       case CacheInvalidationStrategy.CLEAR_ALL:
         cache.clear()
-        logger.log(`清空所有缓存 - ${context || ''}`)
+        tableLogger.log(`清空所有缓存 - ${context || ''}`)
         break
 
       case CacheInvalidationStrategy.CLEAR_CURRENT:
         clearedCount = cache.clearCurrentSearch(searchParams)
-        logger.log(`清空当前搜索缓存 ${clearedCount} 条 - ${context || ''}`)
+        tableLogger.log(`清空当前搜索缓存 ${clearedCount} 条 - ${context || ''}`)
         break
 
       case CacheInvalidationStrategy.CLEAR_PAGINATION:
         clearedCount = cache.clearPagination()
-        logger.log(`清空分页缓存 ${clearedCount} 条 - ${context || ''}`)
+        tableLogger.log(`清空分页缓存 ${clearedCount} 条 - ${context || ''}`)
         break
 
       case CacheInvalidationStrategy.KEEP_ALL:
       default:
-        logger.log(`保持缓存不变 - ${context || ''}`)
+        tableLogger.log(`保持缓存不变 - ${context || ''}`)
         break
     }
     // 手动触发缓存状态更新
@@ -337,7 +338,7 @@ function useTableImpl<TApiFn extends (params: any) => Promise<any>>(
             onCacheHit(cachedItem.data, cachedItem.response)
           }
 
-          logger.log(`缓存命中`)
+          tableLogger.log(`缓存命中`)
           return cachedItem.response
         }
       }
@@ -378,7 +379,7 @@ function useTableImpl<TApiFn extends (params: any) => Promise<any>>(
         cache.set(requestParams, tableData, standardResponse)
         // 手动触发缓存状态更新
         cacheUpdateTrigger.value++
-        logger.log(`数据已缓存`)
+        tableLogger.log(`数据已缓存`)
       }
 
       // 状态机：请求成功，进入 success 状态
@@ -510,7 +511,7 @@ function useTableImpl<TApiFn extends (params: any) => Promise<any>>(
 
     // 修复：如果当前页没有变化，不需要重新请求
     if (pagination.current === newCurrent) {
-      logger.log('分页页码未变化，跳过请求')
+      tableLogger.log('分页页码未变化，跳过请求')
       return
     }
 
@@ -608,7 +609,7 @@ function useTableImpl<TApiFn extends (params: any) => Promise<any>>(
     cacheCleanupTimer = setInterval(() => {
       const cleanedCount = cache.cleanupExpired()
       if (cleanedCount > 0) {
-        logger.log(`自动清理 ${cleanedCount} 条过期缓存`)
+        tableLogger.log(`自动清理 ${cleanedCount} 条过期缓存`)
         // 手动触发缓存状态更新
         cacheUpdateTrigger.value++
       }

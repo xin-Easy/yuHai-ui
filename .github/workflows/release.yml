@@ -66,7 +66,7 @@ jobs:
         run: |
           gh release download --repo xin-Easy/yuHai --pattern "yuHai-windows-latest-*-portable.zip" --dir src-tauri/resources --clobber
           cd src-tauri/resources
-          Move-Item -Path $(Get-ChildItem yuHai-windows-latest-*-portable.zip).Name -Destination yuHai-core.zip -Force
+          Move-Item -Path $(Get-ChildItem yuHai-windows-latest-*-portable.zip).Name -Destination yuHai-core-win-x64.zip -Force
 
       - name: Download Core (Linux)
         if: matrix.platform == 'ubuntu-22.04'
@@ -75,7 +75,19 @@ jobs:
         run: |
           gh release download --repo xin-Easy/yuHai --pattern "yuHai-ubuntu-latest-*-portable.zip" --dir src-tauri/resources --clobber
           cd src-tauri/resources
-          mv yuHai-ubuntu-latest-*-portable.zip yuHai-core.zip
+          mv yuHai-ubuntu-latest-*-portable.zip yuHai-core-linux-x64.zip
+
+      - name: Update Tauri Config (Windows)
+        if: matrix.platform == 'windows-latest'
+        shell: pwsh
+        run: |
+          ./src-tauri/update_config.ps1 -Platform "win-x64"
+
+      - name: Update Tauri Config (Linux)
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          chmod +x ./src-tauri/update_config.sh
+          ./src-tauri/update_config.sh "linux-x64"
 
       - name: Build the app
         uses: tauri-apps/tauri-action@v0

@@ -94,9 +94,13 @@
   background-color: var(--default-box-color);
   border: 1px solid var(--art-card-border);
   border-radius: var(--custom-radius);
-  // 不设置固定高度，由内容决定
-  // 仅添加极小的内边距或无内边距
   overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+
+  &:hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  }
 }
 
 // 修复 Element Plus 按钮点击后的 focus 样式残留
@@ -316,20 +320,27 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin-top: 12px;
-  border-radius: calc(var(--custom-radius) / 2 + 2px) !important;
+  border-radius: var(--custom-radius) !important;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02) !important;
+  border: 1px solid var(--art-card-border) !important;
 
   .el-card__body {
     height: 100%;
     overflow: hidden;
   }
+
+  &:hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06) !important;
+  }
 }
 
-// 容器全高
+// 搜索区域和表格的容器 - 实现无缝连接
 .art-full-height {
   height: var(--art-full-height);
   display: flex;
   flex-direction: column;
+  gap: 16px;
 
   @media (max-width: 640px) {
     height: auto;

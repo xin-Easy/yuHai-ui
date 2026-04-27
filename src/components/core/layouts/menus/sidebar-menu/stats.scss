@@ -4,13 +4,13 @@
   left: 0;
   width: 100%;
   padding: 20px;
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
   background: inherit;
+  border-top: 1px solid rgb(0 0 0 / 5%);
   
   .stat-row {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 15px;
     
     .stat-item {
@@ -18,9 +18,9 @@
       text-align: center;
       
       .stat-label {
+        margin-bottom: 4px;
         font-size: 12px;
         opacity: 0.7;
-        margin-bottom: 4px;
       }
       
       .stat-value {
@@ -32,21 +32,21 @@
     .stat-divider {
       width: 1px;
       height: 20px;
-      background-color: currentColor;
-      opacity: 0.1;
       margin: 0 10px;
+      background-color: currentcolor;
+      opacity: 0.1;
     }
   }
   
   .stat-total {
-    text-align: center;
     padding-top: 10px;
-    border-top: 1px dashed rgba(0, 0, 0, 0.05);
+    text-align: center;
+    border-top: 1px dashed rgb(0 0 0 / 5%);
     
     .stat-label {
+      margin-bottom: 4px;
       font-size: 12px;
       opacity: 0.7;
-      margin-bottom: 4px;
     }
     
     .stat-value {

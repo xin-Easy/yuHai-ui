@@ -21,6 +21,32 @@ pub struct UpdateCheckResult {
     pub update_info: Option<UpdateInfo>,
 }
 
+fn get_current_platform() -> String {
+    option_env!("VITE_CORE_PLATFORM")
+        .unwrap_or({
+            let os = if cfg!(target_os = "windows") {
+                "win"
+            } else if cfg!(target_os = "linux") {
+                "linux"
+            } else if cfg!(target_os = "macos") {
+                "macos"
+            } else {
+                "unknown"
+            };
+            
+            let arch = if cfg!(target_arch = "x86_64") || cfg!(target_arch = "x86") {
+                "x64"
+            } else if cfg!(target_arch = "aarch64") || cfg!(target_arch = "arm64") {
+                "arm64"
+            } else {
+                "unknown"
+            };
+            
+            &format!("{}-{}", os, arch)
+        })
+        .to_string()
+}
+
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "snake_case")]
 #[derive(Clone)]
@@ -67,11 +93,13 @@ pub struct UpdateState {
 pub async fn core_update_check<R: Runtime>(
     _app: AppHandle<R>,
     state: State<'_, Arc<Mutex<UpdateState>>>,
+    client: State<'_, reqwest::Client>,
 ) -> Result<UpdateCheckResult, String> {
-    let base_url = option_env!("VITE_CORE_API_URL").unwrap_or("http://127.0.0.1:8000");
-    let check_url = format!("{}/api/v1/system/update/check", base_url.trim_end_matches('/'));
+    let platform = get_current_platform();
+    log::info!("Checking for core updates, current platform: {}", platform);
+    
+    let check_url = format!("{}/api/v1/system/update/check?platform={}", crate::utils::core_api_base(), platform);
 
-    let client = Client::new();
     let resp = client
         .get(&check_url)
         .send()
@@ -122,6 +150,9 @@ pub async fn core_update_check<R: Runtime>(
         if let Ok(mut s) = state.lock() {
             s.pending_update = Some(info.clone());
         }
+        log::info!("Found core update available: {}", info.version);
+    } else {
+        log::info!("No core update available, current version is latest");
     }
 
     Ok(UpdateCheckResult {
@@ -134,7 +165,11 @@ pub async fn core_update_check<R: Runtime>(
 pub async fn core_update_install<R: Runtime>(
     _app: AppHandle<R>,
     state: State<'_, Arc<Mutex<UpdateState>>>,
+    client: State<'_, reqwest::Client>,
 ) -> Result<String, String> {
+    let platform = get_current_platform();
+    log::info!("Installing core update for platform: {}", platform);
+    
     let info = {
         let s = state.lock().map_err(|e| e.to_string())?;
         s.pending_update.clone().ok_or("No pending update info")?
@@ -142,21 +177,21 @@ pub async fn core_update_install<R: Runtime>(
 
     let download_url = info.download_url.ok_or("No download URL provided by update check")?;
 
-    let base_url = option_env!("VITE_CORE_API_URL").unwrap_or("http://127.0.0.1:8000");
-    let execute_url = format!("{}/api/v1/system/update/execute", base_url.trim_end_matches('/'));
+    let execute_url = format!("{}/api/v1/system/update/execute", crate::utils::core_api_base());
 
-    let client = Client::new();
     let resp = client
         .post(&execute_url)
         .json(&serde_json::json!({
             "download_url": download_url,
-            "version": info.version
+            "version": info.version,
+            "platform": platform
         }))
         .send()
         .await
         .map_err(|e| format!("Failed to trigger update: {}", e))?;
 
     if resp.status().is_success() {
+        log::info!("Core update triggered successfully for version: {}", info.version);
         Ok("Update triggered successfully. Service may restart.".to_string())
     } else {
         let error_msg = resp.text().await.unwrap_or_default();
@@ -181,12 +216,13 @@ pub fn core_update_cancel(_state: State<'_, Arc<Mutex<UpdateState>>>) -> Result<
 }
 
 #[tauri::command(rename_all = "snake_case")]
-pub async fn core_update_get_version<R: Runtime>(_app: AppHandle<R>) -> Result<String, String> {
+pub async fn core_update_get_version<R: Runtime>(
+    _app: AppHandle<R>,
+    client: State<'_, reqwest::Client>,
+) -> Result<String, String> {
     // We can try to fetch it from the check endpoint or just return "0.0.0" and let check handle it
-    let base_url = option_env!("VITE_CORE_API_URL").unwrap_or("http://127.0.0.1:8000");
-    let check_url = format!("{}/api/v1/system/update/check", base_url.trim_end_matches('/'));
+    let check_url = format!("{}/api/v1/system/update/check", crate::utils::core_api_base());
 
-    let client = Client::new();
     match client.get(&check_url).send().await {
         Ok(resp) => {
              if let Ok(json) = resp.json::<ApiResponse<CoreUpdateResponse>>().await {

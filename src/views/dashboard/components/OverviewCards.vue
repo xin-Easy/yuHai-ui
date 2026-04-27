@@ -93,16 +93,16 @@
     align-items: flex-start;
 
     .card-value {
+      margin-bottom: 8px;
       font-size: 24px;
       font-weight: bold;
       color: var(--el-text-color-primary);
-      margin-bottom: 8px;
 
       .unit {
+        margin-left: 4px;
         font-size: 14px;
         font-weight: normal;
         color: var(--el-text-color-secondary);
-        margin-left: 4px;
       }
     }
 
@@ -112,8 +112,8 @@
       font-size: 12px;
 
       .trend-value {
-        font-weight: bold;
         margin-right: 4px;
+        font-weight: bold;
 
         &.up {
           color: var(--el-color-success);

@@ -89,9 +89,9 @@
           <div class="upload-area">
             <div class="upload-text">{{ t('core.noteDetail.uploadText') }}</div>
             <div class="upload-tip">{{ t('core.noteDetail.uploadTip') }}</div>
-            <div class="upload-btn"
-              ><ElButton type="primary">{{ t('core.noteDetail.selectFile') }}</ElButton></div
-            >
+            <div class="upload-btn">
+              <ElButton type="primary">{{ t('core.noteDetail.selectFile') }}</ElButton>
+            </div>
           </div>
         </ElUpload>
       </div>
@@ -235,12 +235,12 @@
   .upload-container {
     .upload-area {
       padding: 24px;
-      text-align: center;
       color: var(--art-text-gray-700);
+      text-align: center;
 
       .upload-text {
-        font-weight: 600;
         margin-bottom: 6px;
+        font-weight: 600;
       }
 
       .upload-tip {
