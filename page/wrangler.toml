@@ -1,8 +1,9 @@
 name = "yuhai-ui"
 compatibility_date = "2024-04-28"
-
-# 这是针对 Pages 项目本地开发的一个配置文件
 pages_build_output_dir = "."
+
+[build]
+command = "npm install"
 
 # 当你运行 `npx wrangler pages dev .` 时，让你的代码知道 DB 对应的是哪个 D1 数据库：
 # 注意：生产环境使用远程数据库
