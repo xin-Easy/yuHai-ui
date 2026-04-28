@@ -726,7 +726,6 @@
     // 初始化 Clerk（使用配置文件中的 key）
     const initClerk = async () => {
       const Clerk = window.Clerk;
-      const publishableKey = window.APP_CONFIG?.clerk?.publishableKey || 'pk_test_dGlkeS1maXNoLTU4LmNsZXJrLmFjY291bnRzLmRldiQ';
 
       try {
         await Clerk.load({
@@ -744,32 +743,43 @@
           }
         });
 
-        const authContainer = document.getElementById('app-auth');
-        
-        if (Clerk.user) {
+        // 统一的 UI 更新函数
+        function updateAuthUI() {
+          const authContainer = document.getElementById('app-auth');
           const user = Clerk.user;
-          const avatarUrl = user.imageUrl || '/assets/app.svg';
-          const userName = user.fullName || user.firstName || user.emailAddresses[0]?.emailAddress || '用户';
-          const userEmail = user.emailAddresses[0]?.emailAddress || '';
 
-          authContainer.innerHTML = `
-            <div class="user-info" style="display: flex; align-items: center; gap: 8px; padding: 6px 12px; background: rgba(139, 92, 246, 0.08); border-radius: 8px; border: 1px solid rgba(139, 92, 246, 0.2); backdrop-filter: blur(10px);">
-              <img src="${avatarUrl}" alt="${userName}" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover;">
-              <div style="display: flex; flex-direction: column; gap: 0px;">
-                <span style="font-size: 13px; font-weight: 600; color: var(--text-primary);">${userName}</span>
+          if (user) {
+            const avatarUrl = user.imageUrl || '/assets/app.svg';
+            const userName = user.fullName || user.firstName || user.emailAddresses[0]?.emailAddress || '用户';
+
+            authContainer.innerHTML = `
+              <div class="user-info" style="display: flex; align-items: center; gap: 8px; padding: 6px 12px; background: rgba(139, 92, 246, 0.08); border-radius: 8px; border: 1px solid rgba(139, 92, 246, 0.2); backdrop-filter: blur(10px);">
+                <img src="${avatarUrl}" alt="${userName}" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover;">
+                <div style="display: flex; flex-direction: column; gap: 0px;">
+                  <span style="font-size: 13px; font-weight: 600; color: var(--text-primary);">${userName}</span>
+                </div>
+                <button id="logoutBtnConsole" style="margin-left: 8px; padding: 4px 10px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.2)'" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)'">退出</button>
               </div>
-              <button id="logoutBtnConsole" style="margin-left: 8px; padding: 4px 10px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.2)'" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)'">退出</button>
-            </div>
-          `;
+            `;
 
-          document.getElementById('logoutBtnConsole').addEventListener('click', async () => {
-            await Clerk.signOut();
+            document.getElementById('logoutBtnConsole').addEventListener('click', async () => {
+              await Clerk.signOut();
+              window.location.href = '/index.html';
+            });
+          } else {
             window.location.href = '/index.html';
-          });
-        } else {
-          // If not logged in, redirect to home
-          window.location.href = '/index.html';
+          }
         }
+
+        // 初始化时更新 UI
+        updateAuthUI();
+
+        // 监听 Clerk 状态变化，自动更新 UI
+        Clerk.addListener(({ user }) => {
+          console.log('Clerk 状态变化:', user ? `用户已登录: ${user.emailAddresses[0]?.emailAddress}` : '用户已退出');
+          updateAuthUI();
+        });
+
       } catch (err) {
         console.error('Clerk Initialization Error: ', err);
       } finally {

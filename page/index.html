@@ -736,7 +736,6 @@
     // 初始化 Clerk（使用配置文件中的 key）
     const initClerk = async () => {
       const Clerk = window.Clerk;
-      const publishableKey = window.APP_CONFIG?.clerk?.publishableKey || 'pk_test_dGlkeS1maXNoLTU4LmNsZXJrLmFjY291bnRzLmRldiQ';
 
       try {
         console.log('开始加载Clerk...');
@@ -764,83 +763,90 @@
         console.log('Clerk版本:', Clerk.version);
         console.log('Clerk已加载状态:', Clerk.loaded);
 
-        const authLoading = document.getElementById('auth-loading');
-        const authContainer = document.getElementById('app-auth');
-        const experienceBtn = document.getElementById('btn-experience');
-
-        if (Clerk.user) {
+        // 统一的 UI 更新函数
+        function updateAuthUI() {
+          const authLoading = document.getElementById('auth-loading');
+          const authContainer = document.getElementById('app-auth');
+          const experienceBtn = document.getElementById('btn-experience');
           const user = Clerk.user;
-          const avatarUrl = user.imageUrl || '/assets/app.svg';
-          const userName = user.fullName || user.firstName || user.emailAddresses[0]?.emailAddress || '用户';
-          const userEmail = user.emailAddresses[0]?.emailAddress || '';
 
-          authContainer.innerHTML = `
-            <div class="user-info">
-              <img src="${avatarUrl}" alt="${userName}">
-              <div class="user-info-text">
-                <span class="user-info-name">${userName}</span>
-                <span class="user-info-email">${userEmail}</span>
+          if (authLoading) authLoading.style.display = 'none';
+
+          if (user) {
+            const avatarUrl = user.imageUrl || '/assets/app.svg';
+            const userName = user.fullName || user.firstName || user.emailAddresses[0]?.emailAddress || '用户';
+            const userEmail = user.emailAddresses[0]?.emailAddress || '';
+
+            authContainer.innerHTML = `
+              <div class="user-info">
+                <img src="${avatarUrl}" alt="${userName}">
+                <div class="user-info-text">
+                  <span class="user-info-name">${userName}</span>
+                  <span class="user-info-email">${userEmail}</span>
+                </div>
+                <button id="logoutBtn" class="btn-logout">退出</button>
               </div>
-              <button id="logoutBtn" class="btn-logout">退出</button>
-            </div>
-          `;
+            `;
 
-          if (authLoading) authLoading.style.display = 'none';
+            document.getElementById('logoutBtn').addEventListener('click', async () => {
+              await Clerk.signOut();
+              window.location.reload();
+            });
 
-          document.getElementById('logoutBtn').addEventListener('click', async () => {
-            await Clerk.signOut();
-            window.location.reload();
-          });
-
-          if (experienceBtn) {
-            experienceBtn.innerText = "控制台";
-            experienceBtn.onclick = (e) => {
-              e.preventDefault();
-              window.openConsoleModal();
-            };
-          }
-        } else {
-          if (authLoading) authLoading.style.display = 'none';
-          if (experienceBtn) {
-            experienceBtn.innerText = "登录";
-            experienceBtn.onclick = async (e) => {
-              e.preventDefault();
-              console.log('点击了登录按钮');
-              console.log('Clerk对象:', Clerk);
-              console.log('Clerk是否已加载:', Clerk.loaded);
-              const signInDiv = document.getElementById('clerk-sign-in');
-              if (!signInDiv) {
-                const div = document.createElement('div');
-                div.id = 'clerk-sign-in';
-                document.body.appendChild(div);
-                console.log('创建了sign-in容器');
-              }
-              try {
-                await Clerk.mountSignIn(document.getElementById('clerk-sign-in'), {
-                  appearance: {
-                    variables: {
-                      colorPrimary: '#8b5cf6',
-                      colorBackground: '#ffffff',
-                      colorText: '#1e293b',
-                      colorInputBackground: '#f8fafc',
-                      colorInputText: '#1e293b',
-                    },
-                    elements: {
-                      footerAction: 'display: none',
-                    },
-                    branding: {
-                      logo: '/assets/app.svg',
-                      name: 'yuhai',
-                    },
-                  }
-                });
-                console.log('SignIn组件挂载成功');
-              } catch (err) {
-                console.error('挂载SignIn失败:', err);
-              }
-            };
+            if (experienceBtn) {
+              experienceBtn.innerText = "控制台";
+              experienceBtn.onclick = (e) => {
+                e.preventDefault();
+                window.openConsoleModal();
+              };
+            }
+          } else {
+            if (experienceBtn) {
+              experienceBtn.innerText = "登录";
+              experienceBtn.onclick = async (e) => {
+                e.preventDefault();
+                const signInDiv = document.getElementById('clerk-sign-in');
+                if (!signInDiv) {
+                  const div = document.createElement('div');
+                  div.id = 'clerk-sign-in';
+                  document.body.appendChild(div);
+                }
+                try {
+                  await Clerk.mountSignIn(document.getElementById('clerk-sign-in'), {
+                    appearance: {
+                      variables: {
+                        colorPrimary: '#8b5cf6',
+                        colorBackground: '#ffffff',
+                        colorText: '#1e293b',
+                        colorInputBackground: '#f8fafc',
+                        colorInputText: '#1e293b',
+                      },
+                      elements: {
+                        footerAction: 'display: none',
+                      },
+                      branding: {
+                        logo: '/assets/app.svg',
+                        name: 'yuhai',
+                      },
+                    }
+                  });
+                } catch (err) {
+                  console.error('挂载SignIn失败:', err);
+                }
+              };
+            }
           }
         }
+
+        // 初始化时更新 UI
+        updateAuthUI();
+
+        // 监听 Clerk 状态变化，自动更新 UI
+        Clerk.addListener(({ user }) => {
+          console.log('Clerk 状态变化:', user ? `用户已登录: ${user.emailAddresses[0]?.emailAddress}` : '用户已退出');
+          updateAuthUI();
+        });
+
       } catch (err) {
         console.error('Clerk Initialization Error: ', err);
       } finally {
