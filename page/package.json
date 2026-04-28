@@ -1,0 +1,20 @@
+{
+  "name": "yuhai-ui-page-cf-backend",
+  "version": "1.0.0",
+  "description": "Cloudflare Pages API using Clerk & D1",
+  "main": "index.js",
+  "scripts": {
+    "dev": "wrangler pages dev .",
+    "deploy": "wrangler pages deploy .",
+    "db:migrate": "wrangler d1 execute yuhai --local --file=./schema-api-keys.sql",
+    "db:migrate:remote": "wrangler d1 execute yuhai --remote --file=./schema-api-keys.sql",
+    "db:list": "wrangler d1 execute yuhai --local --command=\"SELECT name FROM sqlite_master WHERE type='table'\"",
+    "db:list:remote": "wrangler d1 execute yuhai --remote --command=\"SELECT name FROM sqlite_master WHERE type='table'\""
+  },
+  "dependencies": {
+    "@clerk/backend": "^1.0.0"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

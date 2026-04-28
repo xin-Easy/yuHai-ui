@@ -1,0 +1,22 @@
+name = "yuhai-ui-page"
+compatibility_date = "2024-04-28"
+
+# 这是针对 Pages 项目本地开发的一个配置文件
+pages_build_output_dir = "."
+
+# 当你运行 `npx wrangler pages dev .` 时，让你的代码知道 DB 对应的是哪个 D1 数据库：
+# 注意：生产环境使用远程数据库
+[[d1_databases]]
+binding = "DB"  # 你的代码里 context.env.DB 所使用的变量名
+database_name = "yuhai"  # 与控制台名称一致
+database_id = "218204b8-93d7-4a92-a473-7802994ba3d7" # Cloudflare Dashboard 里的真实 D1 Database ID
+
+# 重要：
+# - 本地开发：`wrangler pages dev .` 会使用上面的配置连接远程数据库（因为没有本地数据库）
+# - 如需完全本地开发，需要在 Cloudflare Dashboard 创建本地 D1 数据库
+# - 迁移命令：
+#   本地: wrangler d1 execute yuhai --local --file=./schema-api-keys.sql
+#   远程: wrangler d1 execute yuhai --remote --file=./schema-api-keys.sql
+
+# .dev.vars 文件应放到根目录，存放本地密钥：
+# 此处不建议提交你的 CLERK_SECRET_KEY！
