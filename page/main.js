@@ -2,7 +2,7 @@
    YuHai Portal — Main Script
    ======================================================== */
 
-; (function () {
+;(function () {
   'use strict'
 
   // ─── 等待Clerk加载 ───
@@ -12,7 +12,7 @@
       if (window.Clerk?.session) {
         return true
       }
-      await new Promise(resolve => setTimeout(resolve, 100))
+      await new Promise((resolve) => setTimeout(resolve, 100))
       attempts++
     }
     return false
@@ -241,7 +241,7 @@
         return
       }
 
-      if (!await waitForClerk()) {
+      if (!(await waitForClerk())) {
         alert('认证加载中，请稍后...')
         return
       }
@@ -254,7 +254,7 @@
         const response = await fetch('/api/api-keys', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
@@ -268,7 +268,7 @@
           newKeyText.textContent = result.data.key
           newKeyDisplay.style.display = 'block'
           confirmCreateBtn.textContent = '已创建'
-          
+
           // Refresh list after 2 seconds
           setTimeout(() => {
             loadApiKeys()
@@ -289,8 +289,8 @@
     })
 
     // Load API keys
-    window.loadApiKeys = async function() {
-      if (!await waitForClerk()) {
+    window.loadApiKeys = async function () {
+      if (!(await waitForClerk())) {
         const apiKeysList = document.getElementById('apiKeysList')
         if (!apiKeysList) return
         apiKeysList.innerHTML = `
@@ -308,7 +308,7 @@
         const token = await Clerk.session.getToken()
         const response = await fetch('/api/api-keys', {
           headers: {
-            'Authorization': `Bearer ${token}`
+            Authorization: `Bearer ${token}`
           }
         })
 
@@ -350,29 +350,37 @@
         return
       }
 
-      apiKeysList.innerHTML = keys.map(key => `
+      apiKeysList.innerHTML = keys
+        .map(
+          (key) => `
         <div class="api-key-item ${key.status.revoked ? 'api-key-revoked' : ''}">
           <div class="api-key-info">
             <span class="api-key-name">${escapeHtml(key.name)}</span>
             <span class="api-key-prefix">${escapeHtml(key.prefix)}***</span>
             <span class="api-key-stats">
-              使用 ${key.usage?.total || 0} 次 
+              使用 ${key.usage?.total || 0} 次
               ${key.usage?.lastUsed ? '| 最后: ' + formatDate(key.usage.lastUsed) : ''}
             </span>
           </div>
           <div class="api-key-actions">
-            ${!key.status.revoked ? `
+            ${
+              !key.status.revoked
+                ? `
               <button class="btn-copy-key" onclick="copyKeyToClipboard('${escapeHtml(key.prefix)}')">复制</button>
               <button class="btn-delete-key" onclick="showDeleteConfirm(${key.id}, '${escapeHtml(key.name)}')">删除</button>
-            ` : '<span style="font-size: 12px; color: #ef4444;">已删除</span>'}
+            `
+                : '<span style="font-size: 12px; color: #ef4444;">已删除</span>'
+            }
           </div>
         </div>
-      `).join('')
+      `
+        )
+        .join('')
     }
 
     // Make functions globally accessible
-    window.copyKeyToClipboard = async function(prefix) {
-      if (!await waitForClerk()) {
+    window.copyKeyToClipboard = async function (prefix) {
+      if (!(await waitForClerk())) {
         alert('认证加载中，请稍后...')
         return
       }
@@ -380,12 +388,12 @@
       try {
         const token = await Clerk.session.getToken()
         const response = await fetch('/api/api-keys', {
-          headers: { 'Authorization': `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` }
         })
         const result = await response.json()
-        
+
         if (result.success && result.data?.keys) {
-          const key = result.data.keys.find(k => k.prefix === prefix)
+          const key = result.data.keys.find((k) => k.prefix === prefix)
           if (key) {
             alert('API Key前缀: ' + key.prefix + '\n完整Key仅在创建时显示，请妥善保管！')
           }
@@ -404,7 +412,7 @@
     const btnDeleteCancel = document.getElementById('btn-delete-cancel')
 
     // 显示删除确认
-    window.showDeleteConfirm = function(keyId, keyName) {
+    window.showDeleteConfirm = function (keyId, keyName) {
       pendingDeleteKeyId = keyId
       pendingDeleteKeyName = keyName
       deleteKeyNameSpan.textContent = keyName
@@ -439,7 +447,7 @@
     btnDeleteConfirm?.addEventListener('click', async () => {
       if (!pendingDeleteKeyId) return
 
-      if (!await waitForClerk()) {
+      if (!(await waitForClerk())) {
         hideDeleteConfirm()
         alert('认证加载中，请稍后...')
         return
@@ -449,7 +457,7 @@
         const token = await Clerk.session.getToken()
         const response = await fetch(`/api/api-keys-manage?id=${pendingDeleteKeyId}`, {
           method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` }
         })
 
         const result = await response.json()
@@ -479,8 +487,8 @@
     function formatDate(dateStr) {
       if (!dateStr) return ''
       const date = new Date(dateStr)
-      return date.toLocaleDateString('zh-CN', { 
-        month: 'short', 
+      return date.toLocaleDateString('zh-CN', {
+        month: 'short',
         day: 'numeric',
         hour: '2-digit',
         minute: '2-digit'
@@ -489,7 +497,7 @@
 
     // Load keys when modal opens
     const originalClose = closeModal
-    closeModal = function() {
+    closeModal = function () {
       originalClose()
       closeCreateKeyModal()
       // 延迟加载确保模态框动画完成
